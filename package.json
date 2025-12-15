@@ -1,0 +1,37 @@
+{
+  "name": "crown-and-consequence",
+  "version": "1.0.0",
+  "description": "A decision-based game",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon -L ./server/index.js",
+    "start": "node ./server/index.js",
+    "setup-db": "node ./db/setup.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeanneCodes/crown-and-consequence.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/LeanneCodes/crown-and-consequence/issues"
+  },
+  "homepage": "https://github.com/LeanneCodes/crown-and-consequence#readme",
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "nodemon": "^3.1.11"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "node": "^24.12.0",
+    "path": "^0.12.7",
+    "pg": "^8.16.3",
+    "supabase": "^2.67.1"
+  }
+}
