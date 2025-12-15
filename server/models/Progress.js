@@ -1,5 +1,7 @@
 const db = require("../db/connect")
 // Assuming table is called characters
+
+//IN PROGRESS
 class Progress {
 
   constructor({character_id, name, story_id}) {
