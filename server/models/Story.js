@@ -1,21 +1,25 @@
-const db = require("../db/connect")
-// Assuming table is called stories
-class Story {
+const db = require("../db/connect");
 
-  constructor({story_id, story_name, description, img}) {
-    this.story_id = story_id
-    this.story_name = story_name
-    this.description = description
-    this.img = img
+class Story {
+  constructor({ id, title, description, is_active }) {
+    this.id = id;
+    this.title = title;
+    this.description = description;
+    this.isActive = is_active; // if the story is active, the frontend will add interaction to that story
   }
 
-  static async getAll() { // see all the stories from the database
-    const response = await db.query('SELECT * FROM stories;')
+  static async getAll() {
+    const response = await db.query(`
+      SELECT id, title, description, is_active
+      FROM stories;
+    `);
+
     if (response.rows.length === 0) {
-        throw new Error('No stories available')
+      return [];
     }
-        return response.rows.map(c => new Story(c))
-    }
+
+    return response.rows.map(row => new Story(row));
+  }
 }
 
-module.exports = Story
+module.exports = Story;
