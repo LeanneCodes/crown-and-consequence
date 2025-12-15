@@ -8,7 +8,7 @@ class User {
     this.progress = progress
   }
 
-    static async getOneUser(userName) {
+    static async getOneUser(userName) { // get one user
         const response = await db.query('SELECT user_name, progress FROM users WHERE LOWER(user_name) = LOWER($1);', [userName])
         if(response.rows.length !== 1) {
             throw new Error('Unable to find user: ' + userName)
@@ -16,7 +16,7 @@ class User {
         return new User(response.rows[0])
     }
 
-   static async create(data) { //This looks to see if the country exists, if it does it gives an error, if it doesn't then it will create one
+   static async create(data) { // create a user
     const {user_name, password} = data
     const existingUser = await db.query('SELECT user_name FROM users WHERE LOWER(user_name) = Lower($1);', [user_name])
     if(existingUser.rows.length === 0) {
@@ -27,12 +27,12 @@ class User {
     }
     }
 
-    async destroy() {
+    async destroy() { // delete a user from the database
         let response = await db.query('DELETE FROM users WHERE user_name = $1 RETURNING *;', [this.user_name])
         return new User(response.rows[0])
     }
 
-    async update(data) {
+    async update(data) { // update user password from the database
         const response = await db.query('UPDATE users SET password = $1 WHERE user_name = $2 RETURNING user_name, password;', [ data.password, this.user_name ]);
         if (response.rows.length != 1) {
             throw new Error('Unable to update password.')

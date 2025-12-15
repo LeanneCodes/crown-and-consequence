@@ -8,8 +8,8 @@ class Character {
     this.story_id = story_id
   }
 
-  static async getAll() {
-    const response = await db.query('SELECT * FROM characters WHERE story_id = $1;', [story_id]) //country refers to the name of the TABLE in the SQL file
+  static async getAll() { // we will see all the characters from the specific story selected
+    const response = await db.query('SELECT * FROM characters WHERE story_id = $1;', [story_id])
     if (response.rows.length === 0) {
         throw new Error('No characters available')
     }

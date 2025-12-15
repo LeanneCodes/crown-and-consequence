@@ -2,14 +2,15 @@ const db = require("../db/connect")
 // Assuming table is called stories
 class Story {
 
-  constructor({story_id, title, description}) {
+  constructor({story_id, story_name, description, img}) {
     this.story_id = story_id
-    this.title = title
+    this.story_name = story_name
     this.description = description
+    this.img = img
   }
 
-  static async getAll() {
-    const response = await db.query('SELECT * FROM stories;') //country refers to the name of the TABLE in the SQL file
+  static async getAll() { // see all the stories from the database
+    const response = await db.query('SELECT * FROM stories;')
     if (response.rows.length === 0) {
         throw new Error('No stories available')
     }
