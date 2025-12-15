@@ -1,28 +1,61 @@
-const db = require("../db/connect")
-// Assuming table is called scene
-class Scene {
+const db = require("../db/connect");
 
-  constructor({scene_id, character_id, question_id, answer_id, progress_id, user_id}) {
-    this.scene_id = scene_id
-    this.character_id = character_id
-    this.question_id = question_id
-    this.answer_id = answer_id
-    this.progress_id = progress_id
-    this.user_id = user_id
+class Scene {
+  constructor({
+    id,
+    character_id,
+    scene_order,
+    narrative,
+    question,
+    option_a,
+    option_b,
+    correct_option,
+    feedback_correct,
+    feedback_wrong,
+    points,
+    is_final
+  }) {
+    this.id = id;
+    this.character_id = character_id;
+    this.scene_order = scene_order;
+    this.narrative = narrative;
+    this.question = question;
+    this.option_a = option_a;
+    this.option_b = option_b;
+    this.correct_option = correct_option;
+    this.feedback_correct = feedback_correct;
+    this.feedback_wrong = feedback_wrong;
+    this.points = points;
+    this.is_final = is_final;
   }
 
-  static async getFirstScene() { // see one scene at a time
-    const response = await db.query('SELECT scene_id FROM scenes LIMIT 1;')
+  static async getByCharacterId(characterId) {  // Get all scenes for a character (in order)
+    const response = await db.query(
+      `SELECT * FROM scenes
+       WHERE character_id = $1
+       ORDER BY scene_order;`,
+      [characterId]
+    );
+
     if (response.rows.length === 0) {
-        throw new Error('No scenes available')
-    }
-        return response.rows.map(c => new Scene(c))
+      throw new Error("No scenes found for this character");
     }
 
-    static async getAllScenes(data) {
-        const { user_id, user_name, password, progress } = data
-        const response = await db.query('SELECT * FROM scenes s JOIN users u ON u.progress_id = s.scene_id WHERE ')
+    return response.rows.map(row => new Scene(row));
+  }
+
+  static async getById(id) {  // Get a single scene by ID (the ID will come from the controller req.params.id)
+    const response = await db.query(
+      "SELECT * FROM scenes WHERE id = $1;",
+      [id]
+    );
+
+    if (response.rows.length === 0) {
+      throw new Error("Scene not found");
     }
+
+    return new Scene(response.rows[0]);
+  }
 }
 
-module.exports = Scene
+module.exports = Scene;
