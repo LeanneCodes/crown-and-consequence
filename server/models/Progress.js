@@ -1,38 +1,75 @@
-const db = require("../db/connect")
-// Assuming table is called characters
+const db = require("../db/connect");
 
-//IN PROGRESS
 class Progress {
-
-  constructor({character_id, name, story_id}) {
-    this.character_id = character_id
-    this.name = name
-    this.story_id = story_id
+  constructor({
+    id,
+    user_id,
+    story_id,
+    character_id,
+    current_scene_id,
+    score,
+    completed
+  }) {
+    this.id = id;
+    this.user_id = user_id;
+    this.story_id = story_id;
+    this.character_id = character_id;
+    this.current_scene_id = current_scene_id;
+    this.score = score;
+    this.completed = completed;
   }
 
-  static async Trirad() {
-    const response = await db.query('SELECT * FROM answers WHERE question_id = $1 AND answer_id = $2;', [question_id, answer_id]) //country refers to the name of the TABLE in the SQL file
-    if (response.rows.length === 0) {
-        throw new Error('Wrong answer selected')
-    }
-        return response.rows.map(c => new Character(c))
-    }
-
-    async checkAnswer(userId) {
-        const response = await db.query('SELECT * FROM answers WHERE question_id = $1 AND answer_id = $2;', [question_id, answer_id]) 
-        if (response.rows.length === 0) {
-        throw new Error('Wrong answer selected')
-    } else {
-        const result = await db.query('UPDATE users SET score = score + 1 WHERE user_id = $1 RETURNING user_id, score;', [userId]
+  static async getByUserAndStory(userId, storyId) { // Get progress for a user and story (these IDs will come from the controller req.body)
+    const response = await db.query(
+      `SELECT *
+       FROM progress
+       WHERE user_id = $1 AND story_id = $2;`,
+      [userId, storyId]
     );
 
-    if (result.rows.length !== 1) {
-      throw new Error("Failed to update user score");
-    }
-    }
-}
-}
+    if (response.rows.length === 0) return null;
 
-const db = require("../db/connect");
+    return new Progress(response.rows[0]);
+  }
+
+  static async create({  // Create new progress record, if one does not currently exist
+    user_id,
+    story_id,
+    character_id,
+    current_scene_id
+  }) {
+    const response = await db.query(
+      `INSERT INTO progress
+       (user_id, story_id, character_id, current_scene_id)
+       VALUES ($1, $2, $3, $4)
+       RETURNING *;`,
+      [user_id, story_id, character_id, current_scene_id]
+    );
+
+    return new Progress(response.rows[0]);
+  }
+
+  static async updateProgress({ // Update scene and score
+    user_id,
+    story_id,
+    current_scene_id,
+    score,
+    completed = false
+  }) {
+    const response = await db.query(
+      `UPDATE progress
+       SET current_scene_id = $1,
+           score = $2,
+           completed = $3
+       WHERE user_id = $4 AND story_id = $5
+       RETURNING *;`,
+      [current_scene_id, score, completed, user_id, story_id]
+    );
+
+    return new Progress(response.rows[0]);
+  }
+
+  // No need to delete progress. We only want to view, create and update progress
+}
 
 module.exports = Progress;
