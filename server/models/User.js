@@ -1,45 +1,88 @@
 const db = require("../db/connect");
-//Assuming table is called users
+
 class User {
-  constructor({user_id, user_name, password, progress }) {
-    this.user_id = user_id
-    this.user_name = user_name
-    this.password = password
-    this.progress = progress
+  constructor({ id, username, email, password_hash }) {
+    this.id = id;
+    this.username = username;
+    this.email = email;
+    this.password_hash = password_hash;
   }
 
-    static async getOneUser(userName) { // get one user
-        const response = await db.query('SELECT user_name, progress FROM users WHERE LOWER(user_name) = LOWER($1);', [userName])
-        if(response.rows.length !== 1) {
-            throw new Error('Unable to find user: ' + userName)
-        }
-        return new User(response.rows[0])
+  static async create({ username, email, password_hash }) {     // Create a new user
+    const response = await db.query(
+      `
+      INSERT INTO users (username, email, password_hash)
+      VALUES ($1, $2, $3)
+      RETURNING *;
+      `,
+      [username, email, password_hash]
+    );
+
+    return new User(response.rows[0]);
+  }
+
+  static async findByEmail(email) {     // Find a user by email (used for login)
+    const response = await db.query(
+      `
+      SELECT * FROM users
+      WHERE email = $1;
+      `,
+      [email]
+    );
+
+    if (response.rows.length === 0) return null;
+
+    return new User(response.rows[0]);
+  }
+
+  static async findById(id) {   // Find a user by ID (used for auth, progress, ownership checks)
+    const response = await db.query(
+      `
+      SELECT * FROM users
+      WHERE id = $1;
+      `,
+      [id]
+    );
+
+    if (response.rows.length === 0) return null;
+
+    return new User(response.rows[0]);
+  }
+
+  static async updatePassword(userId, newPasswordHash) {   // Update a user's password (hashing done in controller)
+    const response = await db.query(
+      `
+      UPDATE users
+      SET password_hash = $1
+      WHERE id = $2
+      RETURNING *;
+      `,
+      [newPasswordHash, userId]
+    );
+
+    if (response.rows.length === 0) {
+      throw new Error("User not found");
     }
 
-   static async create(data) { // create a user
-    const {user_name, password} = data
-    const existingUser = await db.query('SELECT user_name FROM users WHERE LOWER(user_name) = Lower($1);', [user_name])
-    if(existingUser.rows.length === 0) {
-        let response = await db.query('INSERT INTO users (user_name, password, progress) VALUES ($1, $2, 0) RETURNING *;', [user_name, password])
-        return new User(response.rows[0])
-    } else {
-        throw new Error('A user with this name exists')
-    }
+    return new User(response.rows[0]);
+  }
+
+  static async deleteById(userId) {     // Delete a user account
+    const response = await db.query(
+      `
+      DELETE FROM users
+      WHERE id = $1
+      RETURNING *;
+      `,
+      [userId]
+    );
+
+    if (response.rows.length === 0) {
+      throw new Error("User not found");
     }
 
-    async destroy() { // delete a user from the database
-        let response = await db.query('DELETE FROM users WHERE user_name = $1 RETURNING *;', [this.user_name])
-        return new User(response.rows[0])
-    }
-
-    async update(data) { // update user password from the database
-        const response = await db.query('UPDATE users SET password = $1 WHERE user_name = $2 RETURNING user_name, password;', [ data.password, this.user_name ]);
-        if (response.rows.length != 1) {
-            throw new Error('Unable to update password.')
-        }
-        return new User(response.rows[0]);
-    }
+    return new User(response.rows[0]);
+  }
 }
 
-module.exports = User
-
+module.exports = User;
