@@ -10,7 +10,7 @@ describe('character.html', () => {
     document = await dom.window.document;
   })
   
-  it('has a login button', () => {
+  it('Heading matches', () => {
     const h1 = document.querySelector('h1')
     expect(h1).toBeTruthy
     expect(h1.textContent).toBe("Choose Your Character")
