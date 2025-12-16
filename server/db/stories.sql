@@ -67,7 +67,7 @@ CREATE TABLE progress (
 );
 
 -- USERS
-INSERT INTO users (username, email, password_hash)
+INSERT INTO users (username, email, password)
 VALUES
 ('student1', 'student1@example.com', 'hashed_password_1'),
 ('student2', 'student2@example.com', 'hashed_password_2');
