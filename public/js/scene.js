@@ -20,6 +20,7 @@ let currentSceneOrder = 1;
 let score = 0;
 scoreEl.textContent = score; // initialise score display
 let currentScene = null;
+let firstTry = true; // flag for scoring
 
 // Load scene by order
 async function loadScene(order) {
@@ -27,6 +28,9 @@ async function loadScene(order) {
     const res = await fetch(`/api/stories/${storyId}/characters/${characterId}/scenes/${order}`);
     if (!res.ok) throw new Error("Scene not found");
     currentScene = await res.json();
+
+    // Reset firstTry for the new scene
+    firstTry = true;
 
     // Display scene data
     titleEl.textContent = `Story - Scene ${currentScene.scene_order}`;
@@ -49,8 +53,12 @@ function handleAnswer(selectedOption) {
 
   if (selectedOption === currentScene.correct_option) {
     feedbackEl.textContent = currentScene.feedback_correct || "Correct!";
-    score += 5;
-    scoreEl.textContent = score;
+
+    // Only award points if first try
+    if (firstTry) {
+      score += 5;
+      scoreEl.textContent = score;
+    }
 
     // Move to next scene after 1 second
     if (!currentScene.is_final) {
@@ -61,6 +69,7 @@ function handleAnswer(selectedOption) {
     }
   } else {
     feedbackEl.textContent = currentScene.feedback_wrong || "Wrong! Try again.";
+    firstTry = false; // mark that user has failed first attempt
   }
 }
 
