@@ -11,7 +11,7 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
+    password_hash VARCHAR(255) NOT NULL
 );
 
 
@@ -66,7 +66,7 @@ CREATE TABLE progress (
 );
 
 -- USERS
-INSERT INTO users (username, email, password)
+INSERT INTO users (username, email, password_hash)
 VALUES
 ('student1', 'student1@example.com', 'hashed_password_1'),
 ('student2', 'student2@example.com', 'hashed_password_2');

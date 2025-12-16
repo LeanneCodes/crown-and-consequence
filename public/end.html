@@ -5,35 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/cc-logo-simple.png">
   <link rel="stylesheet" href="css/style.css" />
-  <title>Crown And Consequence</title>
+  <title>Game Complete | Crown and Consequence</title>
 </head>
 <body>
-   <div class="header-logo">
-        <img src="assets/cc-logo.png" alt="Crown and Consequence" style="max-width: 120px;">
-    </div>
-      <div class="selection-container">
+  <div class="header-logo">
+    <img src="assets/cc-logo.png" alt="Crown and Consequence" style="max-width: 120px;">
+  </div>
+
+  <div class="selection-container">
     <div class="auth-box selection-card wide">
-      
-        <h1>Story End - Congratulations you completed the game!</h1>
-</h1>
-
-        <div class="settings-grid">
-            <section class="settings-section full-width">
-                <h2>Your Journey</h2>
-                <p><strong>Stories Completed:</strong> 10 / 10</p>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 100%;"></div>
-                </div>
-            </section>
-
-         
-
-        <div class="switch">
-            <a href="/home">← Back to the Kingdom</a>
-        </div>
+      <h1>Story Completed!</h1>
+      <p id="score-message"></p>
+      <div class="switch">
+        <a href="/home">← Back to the Kingdom</a>
+      </div>
     </div>
-</div>
+  </div>
 
-  
+  <script>
+    // Get score from URL
+    const params = new URLSearchParams(window.location.search);
+    const score = Number(params.get("score")) || 0;
+    const maxScore = 20; // Total points possible
+    const passThreshold = 0.75; // 75%
+
+    const scoreMessageEl = document.getElementById("score-message");
+    const percentage = score / maxScore;
+
+    let message = `You scored ${score} out of ${maxScore}. `;
+
+    if (percentage >= passThreshold) {
+      message += "Well done! You passed this story.";
+    } else {
+      message += "Don't worry! Try again to improve your score.";
+    }
+
+    scoreMessageEl.textContent = message;
+  </script>
 </body>
 </html>
