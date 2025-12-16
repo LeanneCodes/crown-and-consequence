@@ -16,6 +16,6 @@ app.use('/auth', authRouter);                                               // s
 app.use('/stories', storyRouter);                                           // list stories
 app.use('/stories/:storyId/characters', characterRouter);                   // characters per story
 app.use('/stories/:storyId/characters/:characterId/scenes', sceneRouter);   // get scene content
-// app.use('/progress', progressRouter);                                       // answer submission, resume game play
+app.use('/progress', progressRouter);                                       // answer submission, resume game play
 
 module.exports = app

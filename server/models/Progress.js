@@ -32,6 +32,22 @@ class Progress {
     return new Progress(response.rows[0]);
   }
 
+  static async getByUserStoryAndCharacter(userId, storyId, characterId) {
+  const response = await db.query(
+    `SELECT *
+     FROM progress
+     WHERE user_id = $1
+       AND story_id = $2
+       AND character_id = $3;`,
+    [userId, storyId, characterId]
+  );
+
+  if (response.rows.length === 0) return null;
+
+  return new Progress(response.rows[0]);
+}
+
+
   static async create({  // Create new progress record, if one does not currently exist
     user_id,
     story_id,
