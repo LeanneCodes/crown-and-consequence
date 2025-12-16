@@ -8,7 +8,7 @@ body {
     min-height: 100vh;
     background: linear-gradient(135deg, #E8DCC5, #F3EAD7);
     display: flex;
-    flex-direction: column; /* Stacks logo above the container */
+    flex-direction: column; 
     justify-content: center;
     align-items: center;
     padding: 20px;
@@ -18,7 +18,7 @@ body {
     margin-bottom: 30px;
     display: flex;
     justify-content: center;
-    /* Fancy subtle animation to make it feel high-end */
+    
     filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -26,7 +26,6 @@ body {
 .header-logo img {
     max-width: 220px;
     height: auto;
-    /* Ensures the logo background doesn't show a 'white box' on different screens */
     mix-blend-mode: multiply; 
 }
 
@@ -106,6 +105,7 @@ button:hover {
 .selection-card.wide {
   max-width: 800px;
   width: 100%;
+  margin: 0 auto;
 }
 
 .options-grid {
@@ -119,6 +119,8 @@ button:hover {
 .grid-6 {
     grid-template-columns: repeat(3, 1fr);
 }
+
+
 
 .option-item {
     background: #fff;
@@ -280,11 +282,91 @@ button:hover {
 }
 
 .main-logo {
-    max-width: 180px; /* Adjust size for the full logo */
+    max-width: 180px; 
     height: auto;
 }
 
 .compact-logo {
-    max-width: 100px; /* Adjust size for the crown-only logo */
+    max-width: 100px; 
     height: auto;
+}
+
+
+/* Header */
+.game-header {
+  background-color: #7B1E3A;
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.game-header h1 {
+  font-size: 1.4rem;
+}
+.score {
+  font-size: 1rem;
+  font-weight: bold;
+}
+/* Main container */
+.game-container {
+  flex: 1;
+  padding: 2rem;
+  width: 90%;
+  margin: 0 auto;
+}
+/* Game display (image area) */
+.game-display {
+  background-color: #FFF8ED;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.image-placeholder {
+  width: 100%;
+  height: 650px;
+  background-color: #E2D4B7;
+  border: 2px dashed #7B1E3A;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.image-placeholder img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 6px;
+}
+/* Question */
+.question-area {
+  margin-bottom: 1.5rem;
+}
+.question-area h2 {
+  text-align: center;
+  color: #7B1E3A;
+  font-size: 1.3rem;
+}
+/* Options */
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+}
+.option-btn {
+  padding: 0.9rem;
+  background-color: #FFF8ED;
+  border: 2px solid #7B1E3A;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.option-btn:hover {
+  background-color: #7B1E3A;
+  color: #fff;
 }
