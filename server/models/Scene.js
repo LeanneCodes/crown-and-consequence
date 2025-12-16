@@ -29,29 +29,40 @@ class Scene {
     this.is_final = is_final;
   }
 
-  static async getByCharacterId(characterId) {  // Get all scenes for a character (in order)
+  // Get ONE scene by character + order (1–4)
+  static async getByCharacterAndOrder(characterId, order) {
     const response = await db.query(
-      `SELECT * FROM scenes
-       WHERE character_id = $1
-       ORDER BY scene_order;`,
-      [characterId]
+      `
+      SELECT *
+      FROM scenes
+      WHERE character_id = $1
+        AND scene_order = $2
+      LIMIT 1
+      `,
+      [characterId, order]
     );
 
     if (response.rows.length === 0) {
-      throw new Error("No scenes found for this character");
+      return null;
     }
 
-    return response.rows.map(row => new Scene(row));
+    return new Scene(response.rows[0]);
   }
 
-  static async getById(id) {  // Get a single scene by ID (the ID will come from the controller req.params.id)
+  // Get ONE scene by ID
+  static async getById(id) {
     const response = await db.query(
-      "SELECT * FROM scenes WHERE id = $1;",
+      `
+      SELECT *
+      FROM scenes
+      WHERE id = $1
+      LIMIT 1
+      `,
       [id]
     );
 
     if (response.rows.length === 0) {
-      throw new Error("Scene not found");
+      return null;
     }
 
     return new Scene(response.rows[0]);
