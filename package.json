@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon -L ./server/index.js",
     "start": "node ./server/index.js",
-    "setup-db": "node ./db/setup.js",
+    "setup-db": "node ./server/db/setup.js",
     "test": "jest"
   },
   "repository": {
