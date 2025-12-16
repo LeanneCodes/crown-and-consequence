@@ -8,12 +8,12 @@ class User {
     this.password_hash = password_hash;
   }
 
-  static async create({ username, email, password_hash }) {     // Create a new user
+  static async create({ username, email, password_hash }) {
     const response = await db.query(
       `
       INSERT INTO users (username, email, password_hash)
       VALUES ($1, $2, $3)
-      RETURNING *;
+      RETURNING id, username, email, password_hash;
       `,
       [username, email, password_hash]
     );
@@ -21,67 +21,67 @@ class User {
     return new User(response.rows[0]);
   }
 
-  static async findByEmail(email) {     // Find a user by email (used for login)
+  static async findByEmail(email) {
     const response = await db.query(
       `
-      SELECT * FROM users
-      WHERE email = $1;
+      SELECT *
+      FROM users
+      WHERE email = $1
+      LIMIT 1;
       `,
       [email]
     );
 
-    if (response.rows.length === 0) return null;
-
-    return new User(response.rows[0]);
+    return response.rows.length ? new User(response.rows[0]) : null;
   }
 
-  static async findById(id) {   // Find a user by ID (used for auth, progress, ownership checks)
+  static async findById(id) {
     const response = await db.query(
       `
-      SELECT * FROM users
-      WHERE id = $1;
+      SELECT *
+      FROM users
+      WHERE id = $1
+      LIMIT 1;
       `,
       [id]
     );
 
-    if (response.rows.length === 0) return null;
-
-    return new User(response.rows[0]);
+    return response.rows.length ? new User(response.rows[0]) : null;
   }
 
-  static async updatePassword(userId, newPasswordHash) {   // Update a user's password (hashing done in controller)
+  static async updatePassword(userId, newPasswordHash) {
     const response = await db.query(
       `
       UPDATE users
       SET password_hash = $1
       WHERE id = $2
-      RETURNING *;
+      RETURNING id, username, email, password_hash;
       `,
       [newPasswordHash, userId]
     );
 
-    if (response.rows.length === 0) {
+    if (!response.rows.length) {
       throw new Error("User not found");
     }
 
     return new User(response.rows[0]);
   }
 
-  static async deleteById(userId) {     // Delete a user account
+  static async deleteById(userId) {
     const response = await db.query(
       `
       DELETE FROM users
       WHERE id = $1
-      RETURNING *;
+      RETURNING id, username, email;
       `,
       [userId]
     );
 
-    if (response.rows.length === 0) {
+    if (!response.rows.length) {
       throw new Error("User not found");
     }
 
-    return new User(response.rows[0]);
+    return response.rows[0];
   }
 }
 
