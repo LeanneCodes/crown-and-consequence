@@ -30,16 +30,25 @@ fetch(`/api/stories/${storyId}/characters`)
         card.classList.add("locked");
       }
 
-      // image
-      const img = document.createElement("img");
-      img.className = "character-image";
-      img.src = character.image;
-      img.alt = character.name;
+     // image wrapper
+    const imageWrapper = document.createElement("div");
+    imageWrapper.style.width = "100%";
+    imageWrapper.style.height = "160px";
+    imageWrapper.style.overflow = "hidden";
+    imageWrapper.style.borderRadius = "8px";
+    imageWrapper.style.background = "#f2f2f2";
 
-      // if image fails, just show name
-    //   img.onerror = () => {
-    //     img.remove();
-    //   };
+    // image
+    const img = document.createElement("img");
+    img.src = character.image;
+    img.alt = character.name;
+    img.style.width = "100%";
+    img.style.height = "100%";
+    img.style.objectFit = "cover";
+    img.style.display = "block";
+
+    imageWrapper.appendChild(img);
+
 
       const name = document.createElement("h3");
       name.textContent = character.name;
@@ -47,7 +56,7 @@ fetch(`/api/stories/${storyId}/characters`)
       const description = document.createElement("p");
       description.textContent = character.description;
 
-      card.append(img, name, description);
+      card.append(imageWrapper, name, description);
 
       if (index === 0) {
         const button = document.createElement("button");

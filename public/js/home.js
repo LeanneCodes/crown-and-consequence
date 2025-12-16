@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const banner = document.createElement("div");
       banner.className = "image-banner";
-      banner.textContent = isUnlocked ? "Quest ready to play" : "Quest locked 🔒";
+      banner.textContent = isUnlocked ? "Quest unlocked" : "Quest locked 🔒";
 
       const body = document.createElement("div");
       body.className = "card-body";
