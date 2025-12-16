@@ -11,7 +11,7 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL
 );
 
 
@@ -65,7 +65,7 @@ CREATE TABLE progress (
 );
 
 -- USERS
-INSERT INTO users (username, email, password_hash)
+INSERT INTO users (username, email, password)
 VALUES
 ('student1', 'student1@example.com', 'hashed_password_1'),
 ('student2', 'student2@example.com', 'hashed_password_2');
@@ -114,7 +114,6 @@ VALUES
   'Explore global tension, espionage, and ideological conflict in the post-war world.'
 );
 
-
 -- CHARACTERS (Battle of 1066)
 INSERT INTO characters (story_id, name, description, image)
 VALUES
@@ -122,61 +121,61 @@ VALUES
   1,
   'Harold Godwinson',
   'The last Anglo-Saxon King of England, killed at the Battle of Hastings.',
-  'https://upload.wikimedia.org/wikipedia/commons/3/3c/Harold_Godwinson_Bayeux_Tapestry.jpg'
+  'https://ichef.bbci.co.uk/images/ic/480xn/p03hdd2m.jpg'
 ),
 (
   1,
   'William of Normandy',
   'Duke of Normandy who claimed the English throne and became William the Conqueror.',
-  'https://upload.wikimedia.org/wikipedia/commons/5/5e/William_the_Conqueror_Bayeux_Tapestry.jpg'
+  'https://schoolshistory.org.uk/topics/wp-content/uploads/2018/05/william-the-conqueror.jpg'
 ),
 (
   1,
   'Edward the Confessor',
   'King of England whose death without an heir triggered the succession crisis.',
-  'https://upload.wikimedia.org/wikipedia/commons/9/9d/Edward_the_Confessor.jpg'
+  'https://upload.wikimedia.org/wikipedia/commons/6/61/Edward_the_Confessor%2C_the_Wilton_Diptych.jpg'
 ),
 (
   1,
   'Harald Hardrada',
   'King of Norway who invaded England and was defeated at the Battle of Stamford Bridge.',
-  'https://upload.wikimedia.org/wikipedia/commons/4/4a/Harald_Hardrada.jpg'
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS83WeTYedABB3Jouc038mlA228164M2svOFw&s'
 ),
 (
   1,
   'Tostig Godwinson',
   'Harold Godwinson’s exiled brother who allied with Harald Hardrada.',
-  'https://upload.wikimedia.org/wikipedia/commons/0/0c/Tostig_Godwinson.jpg'
+  'https://static.wikia.nocookie.net/kings-and-queens/images/4/4f/Img_9559.jpg/revision/latest?cb=20210128210525'
 ),
 (
   1,
   'Edgar Ætheling',
   'The last male heir of the House of Wessex, briefly proclaimed king but never crowned.',
-  'https://upload.wikimedia.org/wikipedia/commons/1/1a/Edgar_Aetheling.jpg'
+  'https://www.royal.uk/sites/default/files/styles/460x460/public/images/encyclopaedia/editrs198709_404385-lpr.jpg?itok=FIctGfBh'
 ),
 (
   1,
   'Bishop Odo of Bayeux',
   'Half-brother of William of Normandy who supported the invasion and appears in the Bayeux Tapestry.',
-  'https://upload.wikimedia.org/wikipedia/commons/7/77/Odo_of_Bayeux_Bayeux_Tapestry.jpg'
+  'https://cdn.britannica.com/86/126286-004-850C5ADB/William-I.jpg'
 ),
 (
   1,
   'Gyrth Godwinson',
   'Brother of Harold Godwinson who fought and died at the Battle of Hastings.',
-  'https://upload.wikimedia.org/wikipedia/commons/6/63/Gyrth_Godwinson_Bayeux_Tapestry.jpg'
+  'https://www.medievalchronicles.com/wp-content/uploads/2023/12/William_the_Conqueror_in_1066-300x300.webp'
 ),
 (
   1,
   'Leofwine Godwinson',
   'Another brother of Harold Godwinson who was killed fighting the Normans.',
-  'https://upload.wikimedia.org/wikipedia/commons/2/2b/Leofwine_Godwinson.jpg'
+  'https://preview.redd.it/if-harold-godwinson-won-at-hastings-would-he-have-started-v0-z6sf3twsjxte1.png?width=640&crop=smart&auto=webp&s=0d98c6532de860207d9800dc9402a8743b9651ab'
 ),
 (
   1,
   'Ealdred of York',
   'Archbishop who crowned Harold Godwinson and later Edgar Ætheling.',
-  'https://upload.wikimedia.org/wikipedia/commons/8/8a/Ealdred_of_York.jpg'
+  'https://europeanroyalhistory.wordpress.com/wp-content/uploads/2019/10/img_0438.jpg?w=584'
 );
 
 

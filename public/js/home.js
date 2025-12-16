@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (isUnlocked) {
         button.addEventListener("click", () => {
-          window.location.href = `/stories/${story.id}`;
+          window.location.href = `/characters?storyId=${story.id}`;
         });
       }
 
