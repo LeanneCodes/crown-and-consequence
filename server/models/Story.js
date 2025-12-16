@@ -9,10 +9,7 @@ class Story {
   }
 
   static async getAll() {
-    const response = await db.query(`
-      SELECT id, title, description, is_active
-      FROM stories;
-    `);
+    const response = await db.query('SELECT id, title, description, is_active FROM stories;');
 
     if (response.rows.length === 0) {
       return [];

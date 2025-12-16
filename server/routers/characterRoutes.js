@@ -14,5 +14,6 @@ const characterController = require('../controllers/characterController');
 const characterRouter = Router({ mergeParams: true });
 
 characterRouter.get('/', characterController.index); // retrieves all the characters related to the selected story
+characterRouter.get('/:id', characterController.getOne); // retrieves all the characters related to the selected story
 
 module.exports = characterRouter;

@@ -29,29 +29,6 @@ const router = Router({ mergeParams: true });
   - Returns the story text, question, and answer options
   - DOES NOT change any data or affect scoring
 */
-router.get('/:sceneOrder', sceneController.getScene);
-
-/*
-  POST /:sceneOrder/answer
-
-  Purpose:
-  - Handle the user's answer submission for a scene
-  - Used after the user selects an answer (Option A or B)
-
-  Example request:
-  POST /stories/1/characters/2/scenes/1/answer
-
-  Request body example:
-  {
-    "selectedOption": "A"
-  }
-
-  What this does:
-  - Checks whether the selected answer is correct
-  - Awards points if correct on the first attempt
-  - Updates the user's progress (current scene, score, completion)
-  - Returns feedback and information about the next scene
-*/
-router.post('/:sceneOrder/answer', sceneController.submitAnswer);
+router.get('/:order', sceneController.getSceneByOrder);
 
 module.exports = router;
