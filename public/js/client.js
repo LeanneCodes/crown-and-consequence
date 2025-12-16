@@ -1,65 +1,107 @@
 const LOGIN_API_URL = "/api/auth/login";
 const SIGNUP_API_URL = "/api/auth/signup";
 
-// LOGIN form submission
-document.getElementById("login-form")?.addEventListener("submit", async (e) => {
-  e.preventDefault();
+// Login form submission
+const loginForm = document.getElementById("login-form");
 
-  const loginData = {
-    email: document.getElementById("login-email").value,
-    password: document.getElementById("login-password").value
-  };
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  try {
-    const response = await fetch(LOGIN_API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(loginData)
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      alert(data.error || "Error logging in");
-      return;
+    // Remove previous message if it exists
+    const oldMsg = loginForm.querySelector("p");
+    if (oldMsg) {
+        oldMsg.remove();
     }
 
-    alert("Logged in successfully!");
-    window.location.href = "dashboard.html";
+    const loginData = {
+        email: document.getElementById("login-email").value,
+        password: document.getElementById("login-password").value
+    };
 
-  } catch (error) {
-    alert("Something went wrong with signing in.");
-  }
-});
+    try {
+      const response = await fetch(LOGIN_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(loginData)
+      });
 
-// SIGNUP form submission
-document.getElementById("signup-form")?.addEventListener("submit", async (e) => {
-  e.preventDefault();
+      const data = await response.json();
+      const message = document.createElement("p");
 
-  const signupData = {
-    username: document.getElementById("signup-name").value,
-    email: document.getElementById("signup-email").value,
-    password: document.getElementById("signup-password").value
-  };
+      if (!response.ok) {
+        message.textContent = data.error || "Login failed";
+        message.style.color = "red";
+        loginForm.appendChild(message);
+        return;
+      }
 
-  try {
-    const response = await fetch(SIGNUP_API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(signupData)
-    });
+      message.textContent = "Logged in successfully!";
+      message.style.color = "green";
+      loginForm.appendChild(message);
 
-    const data = await response.json();
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 1000);
 
-    if (!response.ok) {
-      alert(data.error || "Error creating an account");
-      return;
+    } catch {
+      const message = document.createElement("p");
+      message.textContent = "Something went wrong";
+      message.style.color = "red";
+      loginForm.appendChild(message);
+    }
+  });
+}
+
+// Sign up form submission
+const signupForm = document.getElementById("signup-form");
+
+if (signupForm) {
+  signupForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Remove previous message if it exists
+    const oldMsg = signupForm.querySelector("p");
+    if (oldMsg) {
+        oldMsg.remove();
     }
 
-    alert("Account created!");
-    window.location.href = "index.html";
+    const signupData = {
+      username: document.getElementById("signup-name").value,
+      email: document.getElementById("signup-email").value,
+      password: document.getElementById("signup-password").value
+    };
 
-  } catch (error) {
-    alert("Something went wrong with creating an account.");
-  }
-});
+    try {
+      const response = await fetch(SIGNUP_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(signupData)
+      });
+
+      const data = await response.json();
+      const message = document.createElement("p");
+
+      if (!response.ok) {
+        message.textContent = data.error || "Signup failed";
+        message.style.color = "red";
+        signupForm.appendChild(message);
+        return;
+      }
+
+      message.textContent = "Account created successfully!";
+      message.style.color = "green";
+      signupForm.appendChild(message);
+
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1000);
+
+    } catch {
+      const message = document.createElement("p");
+      message.textContent = "Something went wrong";
+      message.style.color = "red";
+      signupForm.appendChild(message);
+    }
+  });
+}
