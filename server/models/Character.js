@@ -9,6 +9,17 @@ class Character {
     this.isActive = is_active;  // if the story is active, the frontend will add interaction to that story
   }
 
+  static async getAll() {  // retrieving characters based on the story chosen
+    const response = await db.query(
+      `
+      SELECT id, story_id, name, description, is_active
+      FROM characters;
+      `
+    );
+
+    return response.rows.map(row => new Character(row));
+  }
+
   static async getByStoryId(storyId) {  // retrieving characters based on the story chosen
     const response = await db.query(
       `
