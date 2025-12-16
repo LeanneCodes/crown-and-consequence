@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const jwt = require('sonwebtoken');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
 
@@ -24,19 +24,22 @@ async function login(req, res) {
     const data = req.body;
     try{
         const user = await User.findByUsername(data.username);
-        if(!user) {throw new Error("his user doesn't exist")}
+        if(!user) {throw new Error("This user doesn't exist")}
         const match = await bcrypt.compare(data.password, user.password);
 
         if(match) {
             const load = {username: user.username}
-            const sendToken = {err, token} => {
+            const sendToken = (err, token) => {
+                if(err){
+                    return res.status(500).json({error: "Token generating failed"})
+                }
                 res.status(200).json({
                 success: true,
                 token: token,
             });
             }
 
-            jwt.sign(load, process.env.SECRET_TOKEN, { expiresIn: 3600}, sendToken);
+            jwt.sign(load, process.env.SECRET_TOKEN, { expiresIn: 5000}, sendToken);
         } else {
             throw new Error('User could not be authenticated')  
       }
