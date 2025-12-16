@@ -1,33 +1,27 @@
 const db = require("../db/connect");
 
 class User {
-  constructor({ id, username, email, password_hash }) {
-    this.id = id;
+  constructor({ user_id, username, email, password, is_admin }) {
+    this.user_id = user_id;
     this.username = username;
     this.email = email;
-    this.password_hash = password_hash;
+    this.password = password;
+    this.is_admin = is_admin
   }
 
-  static async create({ username, email, password_hash }) {     // Create a new user
-    const response = await db.query(
-      `
-      INSERT INTO users (username, email, password_hash)
-      VALUES ($1, $2, $3)
-      RETURNING *;
-      `,
-      [username, email, password_hash]
-    );
-
-    return new User(response.rows[0]);
+  static async create(data) {  
+       // Create a new user
+       const {username, email, password, isAdmin} = data;
+    let response = await db.query('INSERT INTO "user" (username, email, password) VALUES ($1, $2, $3) RETURNING user_id;',
+      [username, email, password]);
+ const newId = response.rows[0].user_id;
+        const newUser = await User.findById(newId);
+        return newUser;
   }
 
-  static async findByEmail(email) {     // Find a user by email (used for login)
-    const response = await db.query(
-      `
-      SELECT * FROM users
-      WHERE email = $1;
-      `,
-      [email]
+  static async findByUsername(username) {     // Find a user by email (used for login)
+    const response = await db.query('SELECT * FROM "user" WHERE username = $1;',
+      [username]
     );
 
     if (response.rows.length === 0) return null;
@@ -35,29 +29,22 @@ class User {
     return new User(response.rows[0]);
   }
 
-  static async findById(id) {   // Find a user by ID (used for auth, progress, ownership checks)
-    const response = await db.query(
-      `
-      SELECT * FROM users
-      WHERE id = $1;
-      `,
-      [id]
-    );
-
-    if (response.rows.length === 0) return null;
-
+  static async findById(user_id) {   // Find a user by ID (used for auth, progress, ownership checks)
+    const response = await db.query('SELECT * FROM "user" WHERE user_id = $1', [user_id]);
+    if (response.rows.length === 0) {
+            throw new Error("Unable to locate user.");
+    }
     return new User(response.rows[0]);
   }
 
-  static async updatePassword(userId, newPasswordHash) {   // Update a user's password (hashing done in controller)
+  static async updatePassword(username, password) {   // Update a user's password (hashing done in controller)
     const response = await db.query(
-      `
-      UPDATE users
-      SET password_hash = $1
-      WHERE id = $2
+      `UPDATE "user"
+      SET password = $1
+      WHERE username = $2
       RETURNING *;
       `,
-      [newPasswordHash, userId]
+      [password, username]
     );
 
     if (response.rows.length === 0) {
@@ -67,21 +54,21 @@ class User {
     return new User(response.rows[0]);
   }
 
-  static async deleteById(userId) {     // Delete a user account
+  static async deleteByUsername(username) {     // Delete a user account
     const response = await db.query(
       `
-      DELETE FROM users
-      WHERE id = $1
+      DELETE FROM "user"
+      WHERE username = $1
       RETURNING *;
       `,
-      [userId]
+      [username]
     );
 
     if (response.rows.length === 0) {
       throw new Error("User not found");
     }
 
-    return new User(response.rows[0]);
+    return "User successfully deleted";
   }
 }
 
