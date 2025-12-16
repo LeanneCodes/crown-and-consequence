@@ -52,6 +52,8 @@ CREATE TABLE answer (
     FOREIGN KEY (question_id) REFERENCES question(question_id)
 );
 
+-- for authentication
+-- create table post
 
 
 INSERT INTO story(story_name, description, img)
