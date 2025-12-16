@@ -1,0 +1,61 @@
+const db = require("../db/connect");
+
+class Scene {
+  constructor({
+    id,
+    character_id,
+    scene_order,
+    narrative,
+    question,
+    option_a,
+    option_b,
+    correct_option,
+    feedback_correct,
+    feedback_wrong,
+    points,
+    is_final
+  }) {
+    this.id = id;
+    this.character_id = character_id;
+    this.scene_order = scene_order;
+    this.narrative = narrative;
+    this.question = question;
+    this.option_a = option_a;
+    this.option_b = option_b;
+    this.correct_option = correct_option;
+    this.feedback_correct = feedback_correct;
+    this.feedback_wrong = feedback_wrong;
+    this.points = points;
+    this.is_final = is_final;
+  }
+
+  static async getByCharacterId(characterId) {  // Get all scenes for a character (in order)
+    const response = await db.query(
+      `SELECT * FROM scenes
+       WHERE character_id = $1
+       ORDER BY scene_order;`,
+      [characterId]
+    );
+
+    if (response.rows.length === 0) {
+      throw new Error("No scenes found for this character");
+    }
+
+    return response.rows.map(row => new Scene(row));
+  }
+
+  static async getById(id) {  // Get a single scene by ID (the ID will come from the controller req.params.id)
+    const response = await db.query(
+      "SELECT * FROM scenes WHERE id = $1;",
+      [id]
+    );
+
+    if (response.rows.length === 0) {
+      throw new Error("Scene not found");
+    }
+
+    return new Scene(response.rows[0]);
+  }
+}
+
+module.exports = Scene;
