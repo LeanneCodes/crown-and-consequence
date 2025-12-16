@@ -5,12 +5,34 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 body {
-  min-height: 100vh; 
-  background: linear-gradient(135deg, #E8DCC5, #F3EAD7);
-  display: flex;
-  justify-content: center;
-  align-items: center; 
-  padding: 40px 20px; 
+    min-height: 100vh;
+    background: linear-gradient(135deg, #E8DCC5, #F3EAD7);
+    display: flex;
+    flex-direction: column; /* Stacks logo above the container */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.header-logo {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    /* Fancy subtle animation to make it feel high-end */
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.header-logo img {
+    max-width: 220px;
+    height: auto;
+    /* Ensures the logo background doesn't show a 'white box' on different screens */
+    mix-blend-mode: multiply; 
+}
+
+.header-logo:hover {
+    transform: translateY(-5px) scale(1.02);
+    filter: drop-shadow(0 8px 15px rgba(123, 30, 58, 0.2));
 }
 .auth-box {
   background-color: #FFF8ED;
@@ -252,3 +274,17 @@ button:hover {
   background-color: #8C0019;
 }
 
+.logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.main-logo {
+    max-width: 180px; /* Adjust size for the full logo */
+    height: auto;
+}
+
+.compact-logo {
+    max-width: 100px; /* Adjust size for the crown-only logo */
+    height: auto;
+}
