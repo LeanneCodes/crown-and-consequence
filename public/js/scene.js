@@ -28,12 +28,12 @@ async function loadScene(order) {
     const res = await fetch(`/api/stories/${storyId}/characters/${characterId}/scenes/${order}`);
     if (!res.ok) throw new Error("Scene not found");
     currentScene = await res.json();
-
+    console.log(currentScene)
     // Reset firstTry for the new scene
     firstTry = true;
 
     // Display scene data
-    titleEl.textContent = `Story - Scene ${currentScene.scene_order}`;
+    titleEl.textContent = `The Battle of 1066 - Scene ${currentScene.scene_order}`;
     imageEl.src = currentScene.image || "https://via.placeholder.com/700x350";
     imageEl.alt = currentScene.character_name || "Scene Image";
     narrativeEl.textContent = currentScene.narrative;
