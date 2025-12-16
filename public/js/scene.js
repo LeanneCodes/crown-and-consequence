@@ -1,46 +1,71 @@
-// document.addEventListener('DOMContentLoaded', () => {
-//     const nextButton = document.getElementById('next-step-btn');
-//     const text1 = document.getElementById('narration-text-1');
-//     const text2 = document.getElementById('narration-text-2');
-//     const optionButtons = document.getElementById('option-buttons');
+const params = new URLSearchParams(window.location.search);
+const storyId = params.get("storyId");
+const characterId = params.get("characterId");
 
-//     // State 0: Initial load (Text 1 is visible, Text 2 and Options are hidden)
-//     let gameState = 0;
+if (!storyId || !characterId) {
+  alert("Missing story or character ID.");
+  throw new Error("Missing storyId or characterId");
+}
 
-//     nextButton.addEventListener('click', () => {
-//         gameState++;
+const titleEl = document.getElementById("scene-title");
+const imageEl = document.getElementById("scene-image");
+const narrativeEl = document.getElementById("scene-narrative");
+const questionEl = document.getElementById("scene-question");
+const optionAEl = document.getElementById("option-a");
+const optionBEl = document.getElementById("option-b");
+const feedbackEl = document.getElementById("feedback");
+const scoreEl = document.getElementById("score");
 
-//         if (gameState === 1) {
-//             // Step 1: Hide Text 1, Show Text 2 (The Question)
-//             text1.classList.add('hidden');
-            
-//             // To animate the appearance, we use a delay:
-//             setTimeout(() => {
-//                 text2.classList.remove('hidden');
-//                 // You could add a class here like 'fade-in' if you want a CSS animation
-//             }, 50); 
-            
-//             // Update button text to signal the next action
-//             nextButton.textContent = 'Show Options';
-        
-//         } else if (gameState === 2) {
-//             // Step 2: Hide Next Button, Show Options
-//             nextButton.classList.add('hidden');
-//             optionButtons.classList.remove('hidden');
-            
-//             // Optional: Remove the 'question-title' class to make the text stay
-//             // You might want to remove 'hidden' on Text 2 here if you hid it above.
-//         }
-//     });
+let currentSceneOrder = 1;
+let score = 0;
+scoreEl.textContent = score; // initialise score display
+let currentScene = null;
 
-//     // Optional: Add logic for when an option button is clicked
-//     document.querySelectorAll('.option-btn').forEach(button => {
-//         button.addEventListener('click', (event) => {
-//             const choice = event.target.getAttribute('data-choice');
-//             console.log('User selected choice:', choice);
-//             // In a real game, you would send this choice to the server/controller here
-//             // e.g., fetch('/api/next-scene', { method: 'POST', body: { choice: choice } });
-//             alert(`You chose option ${choice}! Loading next scene...`);
-//         });
-//     });
-// });
+// Load scene by order
+async function loadScene(order) {
+  try {
+    const res = await fetch(`/api/stories/${storyId}/characters/${characterId}/scenes/${order}`);
+    if (!res.ok) throw new Error("Scene not found");
+    currentScene = await res.json();
+
+    // Display scene data
+    titleEl.textContent = `Story - Scene ${currentScene.scene_order}`;
+    imageEl.src = currentScene.image || "https://via.placeholder.com/700x350";
+    imageEl.alt = currentScene.character_name || "Scene Image";
+    narrativeEl.textContent = currentScene.narrative;
+    questionEl.textContent = currentScene.question;
+    optionAEl.textContent = currentScene.option_a;
+    optionBEl.textContent = currentScene.option_b;
+    feedbackEl.textContent = "";
+  } catch (err) {
+    narrativeEl.textContent = "Error loading scene.";
+    console.error(err);
+  }
+}
+
+// Handle answer selection
+function handleAnswer(selectedOption) {
+  if (!currentScene) return;
+
+  if (selectedOption === currentScene.correct_option) {
+    feedbackEl.textContent = currentScene.feedback_correct || "Correct!";
+    score += 5;
+    scoreEl.textContent = score;
+
+    // Move to next scene after 1 second
+    if (!currentScene.is_final) {
+      currentSceneOrder++;
+      setTimeout(() => loadScene(currentSceneOrder), 1000);
+    } else {
+      setTimeout(() => alert(`Game complete! Final score: ${score}`), 500);
+    }
+  } else {
+    feedbackEl.textContent = currentScene.feedback_wrong || "Wrong! Try again.";
+  }
+}
+
+optionAEl.addEventListener("click", () => handleAnswer("A"));
+optionBEl.addEventListener("click", () => handleAnswer("B"));
+
+// Load first scene
+loadScene(currentSceneOrder);

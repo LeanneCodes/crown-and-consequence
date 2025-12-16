@@ -24,7 +24,7 @@ fetch(`/api/stories/${storyId}/characters`)
       if (index === 0) {
         card.classList.add("active");
         card.onclick = () => {
-          window.location.href = `/scenes?characterId=${character.id}`;
+          window.location.href = `/scenes?storyId=${storyId}&characterId=${character.id}`;
         };
       } else {
         card.classList.add("locked");

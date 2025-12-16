@@ -5,6 +5,7 @@ class Scene {
     id,
     character_id,
     scene_order,
+    image,
     narrative,
     question,
     option_a,
@@ -18,6 +19,7 @@ class Scene {
     this.id = id;
     this.character_id = character_id;
     this.scene_order = scene_order;
+    this.image = image;
     this.narrative = narrative;
     this.question = question;
     this.option_a = option_a;
