@@ -24,9 +24,7 @@ class User {
       [username]
     );
 
-    if (response.rows.length === 0) return null;
-
-    return new User(response.rows[0]);
+    return response.rows.length ? new User(response.rows[0]) : null;
   }
 
   static async findById(user_id) {   // Find a user by ID (used for auth, progress, ownership checks)
@@ -47,7 +45,7 @@ class User {
       [password, username]
     );
 
-    if (response.rows.length === 0) {
+    if (!response.rows.length) {
       throw new Error("User not found");
     }
 
@@ -64,7 +62,7 @@ class User {
       [username]
     );
 
-    if (response.rows.length === 0) {
+    if (!response.rows.length) {
       throw new Error("User not found");
     }
 

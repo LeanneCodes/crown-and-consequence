@@ -1,86 +1,251 @@
-DROP TABLE IF EXISTS answer;
-DROP TABLE IF EXISTS question;
-DROP TABLE IF EXISTS "user";
-DROP TABLE IF EXISTS character;
-DROP TABLE IF EXISTS story;
+-- TABLES
+DROP TABLE IF EXISTS progress CASCADE;
+DROP TABLE IF EXISTS scenes CASCADE;
+DROP TABLE IF EXISTS characters CASCADE;
+DROP TABLE IF EXISTS stories CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
 
-CREATE TABLE story (
-    story_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    story_name VARCHAR(100) NOT NULL UNIQUE,
-    description VARCHAR(1000) NOT NULL,
-    img VARCHAR(100)
-    character_id INT,
-    FOREIGN KEY (character_id) REFERENCES character(character_id)
-);
 
-CREATE TABLE character (
-    character_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    character_name VARCHAR(100) NOT NULL UNIQUE,
-    historical_role VARCHAR(100) NOT NULL,
-    nationality VARCHAR(100) NOT NULL,
-    story_id INT NOT NULL,
-    FOREIGN KEY (story_id) REFERENCES story(story_id)
-);
-
-CREATE TABLE "user" (
-    user_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    user_name VARCHAR(20) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    score INT DEFAULT 0,
-    password VARCHAR(20) NOT NULL,
-    character_id INT,
-    FOREIGN KEY (character_id) REFERENCES character(character_id)
+-- USERS
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL
 );
 
 
-CREATE TABLE question (
-    question_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    story_id INT NOT NULL,
-    q1 VARCHAR(255) NOT NULL,
-    q2 VARCHAR(255) NOT NULL,
-    q3 VARCHAR(255) NOT NULL,
-    q4 VARCHAR(255) NOT NULL,
-    FOREIGN KEY (story_id) REFERENCES story(story_id)
+-- STORIES
+CREATE TABLE stories (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    is_active BOOLEAN DEFAULT TRUE
 );
 
-CREATE TABLE answer (
-    answer_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+
+-- CHARACTERS
+CREATE TABLE characters (
+    id SERIAL PRIMARY KEY,
+    story_id INT NOT NULL REFERENCES stories(id) ON DELETE CASCADE,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    image TEXT,
+    is_active BOOLEAN DEFAULT TRUE
+);
+
+
+-- SCENES
+CREATE TABLE scenes (
+    id SERIAL PRIMARY KEY,
+    character_id INT NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
+    scene_order INT NOT NULL,
+    narrative TEXT NOT NULL,
+    question TEXT NOT NULL,
     option_a VARCHAR(255) NOT NULL,
     option_b VARCHAR(255) NOT NULL,
-    correct_answer VARCHAR(255) NOT NULL,
-    question_id INT NOT NULL,
-    FOREIGN KEY (question_id) REFERENCES question(question_id)
+    correct_option CHAR(1) CHECK (correct_option IN ('A', 'B')),
+    feedback_correct TEXT,
+    feedback_wrong TEXT,
+    points INT DEFAULT 0,
+    is_final BOOLEAN DEFAULT FALSE
 );
 
 -- for authentication
 -- create table post
 
+-- PROGRESS
+CREATE TABLE progress (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    story_id INT NOT NULL REFERENCES stories(id) ON DELETE CASCADE,
+    character_id INT NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
+    current_scene_id INT REFERENCES scenes(id),
+    score INT DEFAULT 0,
+    completed BOOLEAN DEFAULT FALSE,
+    UNIQUE (user_id, story_id, character_id)
+);
 
-INSERT INTO story(story_name, description, img)
-VALUES('Story of Harold Godwison - 1066', 'In 1066, England stood on the edge of great change. Harold Godwinson had just been crowned king after the death of Edward the Confessor, a moment that brought both honor and uncertainty. Though supported by the English nobles, Harold knew his position was fragile. Across the Channel, powerful rulers watched closely, believing the English throne should belong to them.
-
-Harold was an experienced leader, shaped by years of warfare and political struggle. When news reached him that an enemy army had landed in the north, he gathered his forces and marched quickly to meet the threat. The campaign tested his endurance and leadership, but his army’s discipline and resolve carried them through the fighting.
-
-Peace did not last. Soon after returning south, Harold learned that another invasion had begun. Despite exhaustion, he chose to confront the new danger immediately. The two armies met near the southern coast, where strategy and determination would decide England’s future. By the end of the day, the fate of the kingdom had changed forever, marking the end of one era and the beginning of another.', 'https://avid-archer.com/wp-content/uploads/2024/07/the-Battle-of-Stamford-Bridge-in-1066.webp')
-
-INSERT INTO character(character_name, historical_role, nationality, story_id)
-VALUES ('Harold Godwinson', 'King of England', 'English', 1);
-
--- INSERT INTO scene (scene_name, scene_overview, story_id, character_id)
--- VALUES()
-
-INSERT INTO question(q1, q2, q3, q4, story_id)
-VALUES("Which foreign ruler claimed that he had been promised the English throne?",
- "What military tactic was famously used by the English army during Harold’s final battle?", 
- "On what exact date did Harold’s final battle take place?",
- "What long-term cultural changes followed the end of Anglo-Saxon rule in England?", 1)
-
-INSERT INTO answer(option_a, option_b, correct_answer, question_id)
+-- USERS
+INSERT INTO users (username, email, password_hash)
 VALUES
-('William, Duke of Normandy', 'Harald Hardrada of Norway', 'William, Duke of Normandy', 1);
-('A tightly packed shield wall', 'Cavalry charges using armored knights', 'A tightly packed shield wall', 2);
-('October 14, 1066', 'September 25, 1066', 'October 14, 1066', 3);
-('The introduction of Norman language and customs into English society', 
- 'England’s conversion from Christianity to pagan beliefs', 
- 'The introduction of Norman language and customs into English society', 4);
+('student1', 'student1@example.com', 'hashed_password_1'),
+('student2', 'student2@example.com', 'hashed_password_2');
 
+-- STORIES
+INSERT INTO stories (title, description)
+VALUES
+(
+  'Crown & Consequence: The Battle of 1066',
+  'Explore the power struggle following Edward the Confessor’s death and the decisive battles that shaped Norman England.'
+),
+(
+  'Crown & Consequence: Tudor England',
+  'Learn key Tudor history decisions through interactive storytelling.'
+),
+(
+  'Crown & Consequence: The English Civil War',
+  'Navigate political and religious tensions between Parliament and the monarchy during England’s civil war.'
+),
+(
+  'Crown & Consequence: The Roman Invasion of Britain',
+  'Experience Roman expansion into Britain and the resistance faced from local tribes.'
+),
+(
+  'Crown & Consequence: The Industrial Revolution',
+  'Discover how industrialisation transformed society, work, and daily life in Britain.'
+),
+(
+  'Crown & Consequence: The French Revolution',
+  'Follow the collapse of the French monarchy and the rise of revolutionary ideas and power.'
+),
+(
+  'Crown & Consequence: The British Empire',
+  'Examine the expansion of British influence and the consequences for nations across the world.'
+),
+(
+  'Crown & Consequence: World War One',
+  'Understand the causes, key events, and global impact of the First World War.'
+),
+(
+  'Crown & Consequence: World War Two',
+  'Make critical decisions during the most destructive conflict in modern history.'
+),
+(
+  'Crown & Consequence: The Cold War',
+  'Explore global tension, espionage, and ideological conflict in the post-war world.'
+);
+
+
+-- CHARACTERS (Battle of 1066)
+INSERT INTO characters (story_id, name, description, image)
+VALUES
+(
+  1,
+  'Harold Godwinson',
+  'The last Anglo-Saxon King of England, killed at the Battle of Hastings.',
+  'https://upload.wikimedia.org/wikipedia/commons/3/3c/Harold_Godwinson_Bayeux_Tapestry.jpg'
+),
+(
+  1,
+  'William of Normandy',
+  'Duke of Normandy who claimed the English throne and became William the Conqueror.',
+  'https://upload.wikimedia.org/wikipedia/commons/5/5e/William_the_Conqueror_Bayeux_Tapestry.jpg'
+),
+(
+  1,
+  'Edward the Confessor',
+  'King of England whose death without an heir triggered the succession crisis.',
+  'https://upload.wikimedia.org/wikipedia/commons/9/9d/Edward_the_Confessor.jpg'
+),
+(
+  1,
+  'Harald Hardrada',
+  'King of Norway who invaded England and was defeated at the Battle of Stamford Bridge.',
+  'https://upload.wikimedia.org/wikipedia/commons/4/4a/Harald_Hardrada.jpg'
+),
+(
+  1,
+  'Tostig Godwinson',
+  'Harold Godwinson’s exiled brother who allied with Harald Hardrada.',
+  'https://upload.wikimedia.org/wikipedia/commons/0/0c/Tostig_Godwinson.jpg'
+),
+(
+  1,
+  'Edgar Ætheling',
+  'The last male heir of the House of Wessex, briefly proclaimed king but never crowned.',
+  'https://upload.wikimedia.org/wikipedia/commons/1/1a/Edgar_Aetheling.jpg'
+),
+(
+  1,
+  'Bishop Odo of Bayeux',
+  'Half-brother of William of Normandy who supported the invasion and appears in the Bayeux Tapestry.',
+  'https://upload.wikimedia.org/wikipedia/commons/7/77/Odo_of_Bayeux_Bayeux_Tapestry.jpg'
+),
+(
+  1,
+  'Gyrth Godwinson',
+  'Brother of Harold Godwinson who fought and died at the Battle of Hastings.',
+  'https://upload.wikimedia.org/wikipedia/commons/6/63/Gyrth_Godwinson_Bayeux_Tapestry.jpg'
+),
+(
+  1,
+  'Leofwine Godwinson',
+  'Another brother of Harold Godwinson who was killed fighting the Normans.',
+  'https://upload.wikimedia.org/wikipedia/commons/2/2b/Leofwine_Godwinson.jpg'
+),
+(
+  1,
+  'Ealdred of York',
+  'Archbishop who crowned Harold Godwinson and later Edgar Ætheling.',
+  'https://upload.wikimedia.org/wikipedia/commons/8/8a/Ealdred_of_York.jpg'
+);
+
+
+-- SCENES (Harold Godwinson – Battle of 1066)
+INSERT INTO scenes (
+    character_id,
+    scene_order,
+    narrative,
+    question,
+    option_a,
+    option_b,
+    correct_option,
+    feedback_correct,
+    feedback_wrong,
+    points,
+    is_final
+)
+VALUES
+(
+    1,
+    1,
+    'Edward the Confessor has died without a clear heir. As Earl of Wessex, Harold Godwinson claims that Edward promised him the throne.',
+    'What should Harold do next?',
+    'Accept the crown and become King of England',
+    'Step aside and support another claimant',
+    'A',
+    'Correct. Harold was crowned King in January 1066.',
+    'Incorrect. Harold chose to claim the throne himself.',
+    0,
+    FALSE
+),
+(
+    1,
+    2,
+    'Harold learns that his brother Tostig has allied with the Norwegian king Harald Hardrada and invaded northern England.',
+    'How should Harold respond to this threat?',
+    'March north immediately to confront the invaders',
+    'Remain in the south to defend against Normandy',
+    'A',
+    'Correct. Harold marched north and defeated the Norwegians at Stamford Bridge.',
+    'Incorrect. Ignoring the northern invasion would weaken his rule.',
+    0,
+    FALSE
+),
+(
+    1,
+    3,
+    'Only days after victory in the north, Harold is told that William of Normandy has landed on the south coast.',
+    'What decision must Harold now make?',
+    'Rest his army before facing William',
+    'Force march south to confront William immediately',
+    'B',
+    'Correct. Harold rushed south, leaving his army exhausted.',
+    'Incorrect. Harold did not delay his response.',
+    0,
+    FALSE
+),
+(
+    1,
+    4,
+    'Harold’s army meets William’s forces at the Battle of Hastings. The fighting is fierce and lasts all day.',
+    'What is the outcome of the battle?',
+    'Harold defeats William and secures his crown',
+    'Harold is killed and William claims the throne',
+    'B',
+    'Correct. Harold was killed, and William became King of England.',
+    'Incorrect. Harold did not survive the battle.',
+    0,
+    TRUE
+);
