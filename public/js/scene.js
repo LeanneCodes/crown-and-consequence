@@ -65,7 +65,10 @@ function handleAnswer(selectedOption) {
       currentSceneOrder++;
       setTimeout(() => loadScene(currentSceneOrder), 1000);
     } else {
-      setTimeout(() => alert(`Game complete! Final score: ${score}`), 500);
+      // Redirect to end page with score as query param
+      setTimeout(() => {
+        window.location.href = `/end?score=${score}`;
+      }, 500);
     }
   } else {
     feedbackEl.textContent = currentScene.feedback_wrong || "Wrong! Try again.";

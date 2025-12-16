@@ -31,6 +31,10 @@ app.get('/scenes', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'scene.html'));
 });
 
+app.get('/end', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'end.html'));
+});
+
 
 app.use('/api/auth', authRouter); 
 app.use('/api/stories', storyRouter);
