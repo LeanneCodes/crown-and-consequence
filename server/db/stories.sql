@@ -69,8 +69,8 @@ VALUES ('Harold Godwinson', 'King of England', 'English', 1);
 
 INSERT INTO question(q1, q2, q3, q4, story_id)
 VALUES("Which foreign ruler claimed that he had been promised the English throne?",
- "What military tactic was famously used by the English army during Harold’s final battle?", 
- "On what exact date did Harold’s final battle take place?",
+ "What military tactic was famously used by the English army during Harold's final battle?", 
+ "On what exact date did Harold's final battle take place?",
  "What long-term cultural changes followed the end of Anglo-Saxon rule in England?", 1)
 
 INSERT INTO answer(option_a, option_b, correct_answer, question_id)
@@ -79,6 +79,6 @@ VALUES
 ('A tightly packed shield wall', 'Cavalry charges using armored knights', 'A tightly packed shield wall', 2);
 ('October 14, 1066', 'September 25, 1066', 'October 14, 1066', 3);
 ('The introduction of Norman language and customs into English society', 
- 'England’s conversion from Christianity to pagan beliefs', 
+ "England's conversion from Christianity to pagan beliefs", 
  'The introduction of Norman language and customs into English society', 4);
 
