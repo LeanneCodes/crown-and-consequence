@@ -19,6 +19,11 @@ app.get('/signup', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'signup.html'));
 });
 
+app.get('/home', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'home.html'));
+});
+
+
 app.use('/api/auth', authRouter); 
 app.use('/api/stories', storyRouter);
 app.use('/api/progress', progressRouter);

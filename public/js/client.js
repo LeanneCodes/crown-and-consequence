@@ -41,7 +41,7 @@ if (loginForm) {
       loginForm.appendChild(message);
 
       setTimeout(() => {
-        window.location.href = "/dashboard";
+        window.location.href = "/home";
       }, 1000);
 
     } catch {
