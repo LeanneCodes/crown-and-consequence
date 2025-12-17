@@ -47,7 +47,7 @@ class User {
       `UPDATE users
       SET password = $1
       WHERE username = $2
-      RETURNING *;
+      RETURNING username, email;
       `,
       [password, username]
     );
@@ -59,14 +59,20 @@ class User {
     return new User(response.rows[0]);
   }
 
-  static async deleteByUsername(username) {     // Delete a user account
+  static async getPassword(email){
+      const response = await db.query(
+        'SELECT password from users WHERE email = $1;', [email])
+        return new User(response.rows[0])
+  }  
+
+  static async deleteByEmail(email) {     // Delete a user account
     const response = await db.query(
       `
       DELETE FROM users
-      WHERE username = $1
+      WHERE email = $1
       RETURNING *;
       `,
-      [username]
+      [email]
     );
 
     if (!response.rows.length) {

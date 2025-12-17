@@ -46,7 +46,7 @@ async function login(req, res) {
       }
         } catch(err) {
             res.status(401).json({error: err.message});
-        }
+        }}
     
 
     async function deleteAccount(req, res) {
