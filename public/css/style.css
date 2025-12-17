@@ -170,11 +170,11 @@ button:hover {
 
 
 .story-wrapper {
+    margin-top: 120px; /* This pushes your main content down exactly enough */
+    padding: 20px;
     display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-items: stretch;
-    margin-top: 1rem;
+    flex-direction: column;
+    align-items: center;
 }
 
 .story-card {
@@ -300,6 +300,7 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap:30px
 }
 .game-header h1 {
   font-size: 1.4rem;
@@ -307,6 +308,7 @@ button:hover {
 .score {
   font-size: 1rem;
   font-weight: bold;
+  white-space: nowrap;
 }
 /* Main container */
 .game-container {
@@ -334,6 +336,29 @@ display: flex;
 justify-content: center;
 align-items: center;
 overflow: hidden;
+}
+.game-display {
+    width: 100%;
+    max-width: 700px;  /* Matches your placeholder width */
+    height: 350px;     /* Fixed height for consistency */
+    margin: 0 auto 1.5rem auto;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    background-color: #E2D4B7; /* Fallback color while image loads */
+    border: 3px solid #7B1E3A; /* Matches your royal theme */
+}
+
+/* The actual image logic */
+.game-display img {
+    width: 100%;
+    height: 100%;
+    /* This is the secret sauce: it crops the image to fill the box 
+       without distorting the people/faces in the historical art */
+    object-fit: cover; 
+    /* Ensures the image is centered within the crop */
+    object-position: center; 
+    display: block;
 }
 
 .game-display .image-placeholder img { 
@@ -425,4 +450,205 @@ border-radius: 6px;
 /* Utility Class for hiding elements */
 .hidden {
     display: none !important;
+}
+
+/* Character Card Styling */
+.option-item {
+    transition: all 0.3s ease;
+    padding: 15px;
+    border: 2px solid transparent;
+}
+
+.char-img-container {
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #f2f2f2;
+    margin-bottom: 10px;
+}
+
+.char-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Locked State */
+.option-item.locked {
+    filter: grayscale(1);
+    opacity: 0.7;
+    cursor: not-allowed;
+    pointer-events: none;
+    background: #f9f9f9;
+    border: 2px dashed #ccc;
+}
+
+.lock-msg {
+    color: #777;
+    font-size: 0.85rem;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Active State */
+.option-item.active:hover {
+    border-color: #7B1E3A;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.select-btn {
+    background: #7B1E3A;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* --- FULL LENGTH NAVBAR --- */
+/* --- FULL LENGTH NAVBAR --- */
+.cc-navbar {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 130px; /* Fixed height for consistency */
+    z-index: 2000;
+    padding: 0 2rem; /* Remove vertical padding, let flexbox center items */
+    background-color: #FFF8ED;
+    border-bottom: 6px solid #7B1E3A;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* --- CENTER LOGO CONTAINER --- */
+.nav-center {
+    position: absolute; /* Absolute relative to the window/navbar */
+    left: 50%;
+    transform: translateX(-50%); /* Perfectly center horizontally */
+    top: 0; /* Align to top of navbar */
+    height: 100%; /* Match navbar height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2500;
+}
+
+/* --- THE LOGO (THE CREST) --- */
+.nav-logo {
+    height: 130px; /* Large size */
+    width: auto;
+    margin-top: 4px; /* Pushes the logo down so it "hangs" over the edge */
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); /* Adds depth so it pops */
+    transition: transform 0.3s ease;
+}
+
+.nav-logo:hover {
+    transform: scale(1.05); /* Subtle zoom */
+}
+
+/* 2. Force Profile and Logout to be side-by-side */
+.nav-right {
+    display: flex;
+    flex-direction: row; /* Ensures side-by-side layout */
+    align-items: center; /* Centers them vertically relative to each other */
+    gap: 15px; /* Adds space between Profile and Logout */
+}
+
+/* 3. Match Profile Text Color and Align Icon */
+.profile-link {
+    display: flex;
+    flex-direction: row; /* Keep icon and text side-by-side */
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: #7B1E3A; /* Matches your project's burgundy theme */
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.profile-link:hover {
+    color: #64162F; /* Darker shade on hover */
+}
+
+.nav-icon {
+    font-size: 1.1rem; /* Adjusts gear icon size */
+}
+
+/* 4. Ensure the logout button doesn't stretch weirdly */
+.logout-btn {
+    padding: 0.5rem 1rem;
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+
+/* --- FIXING THE GAPS & SPACING --- */
+
+/* Container for all page content beneath the navbar */
+.content-wrapper {
+    margin-top: 120px; /* This pushes your main content down exactly enough */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Specific fix for the Scene Page (Image 1) */
+.game-container {
+    margin-top: 20px; /* Extra gap between navbar and the game box */
+}
+
+.question-area {
+    margin-top: 10px; /* Increases space between the narrative text and the question */
+}
+
+/* Specific fix for the Profile Link centering */
+.profile-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    gap: 2px; /* Small gap between icon and text */
+}
+
+/* --- SCENE PAGE SPACING FIXES --- */
+
+/* 1. Space between Scoreboard and Image */
+.game-header {
+    margin-bottom: 40px; /* Adds gap below the dark red header */
+}
+
+.game-display {
+    margin-top: 20px; /* Extra insurance for space above image */
+}
+
+/* 2. Space/Gaps between Narrative, Questions, and Options */
+.narrative-text {
+    margin-bottom: 30px; /* Space between the story text and the question */
+    font-style: italic;
+    color: #5A4634;
+}
+
+#scene-question {
+    margin-top: 15px;
+    margin-bottom: 5px; /* Space between question and the buttons */
+    display: block;      /* Ensures margin-bottom works */
+    font-weight: bold;
+    color: #7B1E3A;
+}
+
+.options {
+    gap: 1.5rem; /* Increased gap between Option A and Option B buttons */
+    margin-top: 20px;
+}
+
+/* Add padding to the whole body so content doesn't hide under the fixed Navbar */
+body {
+    padding-top: 80px; 
 }

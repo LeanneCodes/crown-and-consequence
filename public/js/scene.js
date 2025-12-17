@@ -41,12 +41,12 @@ async function loadScene(order) {
     optionAEl.textContent = currentScene.option_a;
     optionBEl.textContent = currentScene.option_b;
     feedbackEl.textContent = "";
+  narrativeEl.textContent = currentScene.narrative;
   } catch (err) {
     narrativeEl.textContent = "Error loading scene.";
     console.error(err);
   }
 }
-
 // Handle answer selection
 function handleAnswer(selectedOption) {
   if (!currentScene) return;
@@ -65,11 +65,12 @@ function handleAnswer(selectedOption) {
       currentSceneOrder++;
       setTimeout(() => loadScene(currentSceneOrder), 1000);
     } else {
-      // Redirect to end page with score as query param
-      setTimeout(() => {
-        window.location.href = `/end?score=${score}`;
-      }, 500);
-    }
+    // Final Scene completed
+    setTimeout(() => {
+        // We MUST include characterId here for the strict check!
+        window.location.href = `/end.html?score=${score}&storyId=${storyId}&characterId=${characterId}`;
+    }, 500);
+}
   } else {
     feedbackEl.textContent = currentScene.feedback_wrong || "Wrong! Try again.";
     firstTry = false; // mark that user has failed first attempt

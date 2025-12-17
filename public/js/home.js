@@ -45,11 +45,20 @@ document.addEventListener("DOMContentLoaded", async () => {
       button.textContent = isUnlocked ? "Select" : "Locked";
       button.disabled = !isUnlocked;
 
-      if (isUnlocked) {
-        button.addEventListener("click", () => {
-          window.location.href = `/characters?storyId=${story.id}`;
-        });
-      }
+      // Inside your stories.forEach loop:
+if (isUnlocked) {
+  button.addEventListener("click", () => {
+    // This ensures character.html knows which story's characters to load!
+    window.location.href = `character.html?storyId=${story.id}`; 
+  });
+  
+  // Optional: Make the whole card clickable too
+  card.style.cursor = "pointer";
+  card.onclick = () => {
+    window.location.href = `character.html?storyId=${story.id}`;
+  };
+}
+      
 
       body.appendChild(title);
       body.appendChild(description);

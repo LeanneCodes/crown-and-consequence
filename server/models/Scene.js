@@ -30,26 +30,27 @@ class Scene {
     this.points = points;
     this.is_final = is_final;
   }
+// models/Scene.js
 
-  // Get ONE scene by character + order (1–4)
-  static async getByCharacterAndOrder(characterId, order) {
-    const response = await db.query(
-      `
-      SELECT *
-      FROM scenes
-      WHERE character_id = $1
-        AND scene_order = $2
-      LIMIT 1
-      `,
-      [characterId, order]
-    );
+static async getByCharacterAndOrder(characterId, order) {
+  const response = await db.query(
+    `
+    SELECT * FROM scenes 
+    WHERE scene_order = $2 
+    AND character_id = (
+        SELECT id FROM characters 
+        WHERE story_id = (SELECT story_id FROM characters WHERE id = $1)
+        ORDER BY id ASC LIMIT 1
+    )
+    LIMIT 1
+    `,
+    [characterId, order]
+  );
 
-    if (response.rows.length === 0) {
-      return null;
-    }
+  if (response.rows.length === 0) return null;
+  return new Scene(response.rows[0]);
+}
 
-    return new Scene(response.rows[0]);
-  }
 
   // Get ONE scene by ID
   static async getById(id) {
