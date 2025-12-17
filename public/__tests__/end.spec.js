@@ -10,10 +10,10 @@ describe('end.html', () => {
     document = await dom.window.document;
   })
   
-  it('has a login button', () => {
-    const btn = document.querySelector('button')
-    expect(btn).toBeTruthy
-    expect(btn.innerHTML).toBe("Log In")
+  it('Heading matches', () => {
+    const h1 = document.querySelector('h1')
+    expect(h1).toBeTruthy
+    expect(h1.textContent).toBe("Story Completed!")
   })
 
 //   it('h1 is empty when website loads', () => {

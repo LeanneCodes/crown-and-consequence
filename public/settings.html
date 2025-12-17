@@ -58,6 +58,13 @@
                 <h2>Danger Zone</h2>
                 <p>Deleting your account will erase all story progress.</p>
                 <button class="danger-btn">Delete Account</button>
+
+                <div id="delete-confirm" style="display: none; margin-top: 1rem;">
+                    <p>This action cannot be undone.</p>
+                    <input type="email" id="delete-email" placeholder="Email"/>
+                    <input type="password" id="delete-password" placeholder="Password"/>
+                    <button id="confirm-delete-btn">Confirm Delete</button>
+                </div>
             </section>
         </div>
 
@@ -66,7 +73,8 @@
         </div>
     </div> 
 </div>
-</div>
+
+    <script src="js/settings.js"></script>
 </body>
 </html>
 

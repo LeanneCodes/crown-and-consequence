@@ -1,7 +1,9 @@
+require('dotenv').config();
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
 const User = require('../models/User');
+
 
 async function signup(req, res) {
     const data = req.body;
@@ -23,12 +25,12 @@ async function signup(req, res) {
 async function login(req, res) {
     const data = req.body;
     try{
-        const user = await User.findByUsername(data.username);
+        const user = await User.findByEmail(data.email);
         if(!user) {throw new Error("This user doesn't exist")}
         const match = await bcrypt.compare(data.password, user.password);
 
         if(match) {
-            const load = {username: user.username}
+            const load = {email: user.email}
             const sendToken = (err, token) => {
                 if(err){
                     return res.status(500).json({error: "Token generating failed"})
@@ -45,8 +47,45 @@ async function login(req, res) {
       }
         } catch(err) {
             res.status(401).json({error: err.message});
-        }
-    }
+        }}
+    
+
+    async function deleteAccount(req, res) {
+    const data = req.body;
+
+    //no need to generate a new token as user is already logged in
+    try{
+        const user = await User.findByEmail(data.email);
+        if(!user) {throw new Error("This user doesn't exist")}
+        const match = await bcrypt.compare(data.password, user.password);
+
+        if(match) {
+                await User.deleteByEmail(user.email)
+
+                res.status(200).json({
+                success: true,
+                message: "Account Deleted",
+            });
+            }
+        } catch(err) {
+            res.status(401).json({error: err.message});
+        }}
+
+        async function changePassword(req, res){
+            const data = req.body;
+            const newPassword = data.password
+            try{
+                const user = await User.findByEmail(user.email)
+                const match = await bcrypt.compare(data.password, user.password);
+                if (!newPassword) {
+             return res.status(400).json({ error: "New password is required" });
+                }
+                if(match){
+             await User.updatePassword(password)
+                }
+        }catch (err){
+            res.status(401).json({error: err.message})
+        }}
 
 
-    module.exports = {signup, login}
+    module.exports = {signup, login, deleteAccount, changePassword}

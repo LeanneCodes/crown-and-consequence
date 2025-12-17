@@ -8,13 +8,12 @@
     "start": "node ./server/index.js",
     "setup-db": "node ./server/db/setup.js",
     "test": "jest",
-    "testw": "jest --watchAll",
-    "coverage": "jest --coverage"
-  },
-  "jest": {
-    "testPathIgnorePatterns": [
-      ".public/__tests__/helpers.js"
-    ]
+    "test:backend": "jest --selectProjects backend",
+    "test:frontend": "jest --selectProjects frontend",
+    "testw": "jest --watchAll --detectOpenHandles --runInBand --verbose",
+    "unitTests": "jest --testPathPattern=/unit/ --watchAll --verbose",
+    "integrationTests": "jest --testPathPattern=/integration/ --watchAll --detectOpenHandles --runInBand --verbose",
+    "coverage": "jest --coverage --testPathPattern=/unit/"
   },
   "repository": {
     "type": "git",
@@ -30,8 +29,10 @@
   "homepage": "https://github.com/LeanneCodes/crown-and-consequence#readme",
   "devDependencies": {
     "jest": "^29.5.0",
+    "jest-environment-jsdom": "^30.2.0",
     "jsdom": "^21.1.2",
-    "nodemon": "^3.1.11"
+    "nodemon": "^3.1.11",
+    "supertest": "^6.3.3"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
