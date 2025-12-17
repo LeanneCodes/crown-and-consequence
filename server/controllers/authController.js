@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
+const console = require('node:console');
 
 async function signup(req, res) {
     const data = req.body;
@@ -46,7 +47,40 @@ async function login(req, res) {
         } catch(err) {
             res.status(401).json({error: err.message});
         }
-    }
+    
 
+    async function deleteAccount(req, res) {
+    const data = req.body;
 
-    module.exports = {signup, login}
+    //no need to generate a new token as user is already logged in
+    try{
+        const user = await User.findByEmail(data.email);
+        if(!user) {throw new Error("This user doesn't exist")}
+        const match = await bcrypt.compare(data.password, user.password);
+
+        if(match) {
+                await User.deleteByEmail(user.email)
+
+                res.status(200).json({
+                success: true,
+                message: "Account Deleted",
+            });
+            }
+        } catch(err) {
+            res.status(401).json({error: err.message});
+        }}
+
+        // async function changePassword(req, res){
+        //     const data = req.body;
+        //     console.log(data)
+        //     try{
+        //         const user = await User.findByEmail(user.email)
+        //         if (!newPassword) {
+        //      return res.status(400).json({ error: "New password is required" });
+        //     }  
+        // }catch (err){
+        //     res.status(401).json({error: err.message})
+        // }}
+    
+
+    module.exports = {signup, login, deleteAccount, changePassword}
