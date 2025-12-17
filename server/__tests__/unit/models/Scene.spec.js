@@ -6,7 +6,7 @@ describe("Scene", () => {
   afterAll(() => jest.resetAllMocks());
 
   describe("getByCharacterAndOrder", () => {
-    it("resolves with a Scene instance on successful db query", async () => {
+    it("will show a scene that matches the story and the character", async () => {
       // Arrange
       const mockScene = {
         id: 1,
@@ -21,12 +21,10 @@ describe("Scene", () => {
         feedback_correct: "Correct",
         feedback_wrong: "Wrong",
         points: 10,
-        is_final: false
+        is_final: false,
       };
 
-      jest
-        .spyOn(db, "query")
-        .mockResolvedValueOnce({ rows: [mockScene] });
+      jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [mockScene] });
 
       // Act
       const result = await Scene.getByCharacterAndOrder(2, 1);
@@ -52,12 +50,10 @@ describe("Scene", () => {
 
     it("returns null when no scene is found", async () => {
       // Arrange
-      jest
-        .spyOn(db, "query")
-        .mockResolvedValueOnce({ rows: [] });
+      jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
 
       // Act
-      const result = await Scene.getByCharacterAndOrder(99, 1);
+      const result = await Scene.getByCharacterAndOrder(-1, -1);
 
       // Assert
       expect(result).toBeNull();
@@ -80,12 +76,10 @@ describe("Scene", () => {
         feedback_correct: "Correct again",
         feedback_wrong: "Wrong again",
         points: 15,
-        is_final: true
+        is_final: true,
       };
 
-      jest
-        .spyOn(db, "query")
-        .mockResolvedValueOnce({ rows: [mockScene] });
+      jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [mockScene] });
 
       // Act
       const result = await Scene.getById(5);
@@ -108,9 +102,7 @@ describe("Scene", () => {
 
     it("returns null when scene does not exist", async () => {
       // Arrange
-      jest
-        .spyOn(db, "query")
-        .mockResolvedValueOnce({ rows: [] });
+      jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
 
       // Act
       const result = await Scene.getById(999);

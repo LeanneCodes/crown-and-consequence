@@ -1,29 +1,22 @@
-const { Pool } = require('pg');
-const fs = require('fs');
-require('dotenv').config();
+const { Pool } = require("pg");
+const fs = require("fs");
+const path = require("path");
+require("dotenv").config();
 
-// Load the SQL reset file
-const resetSQL = fs.readFileSync(__dirname + '/reset.sql').toString();
+// One pool for all integration tests
+const db = new Pool({
+  connectionString: process.env.DB_TEST_URL,
+});
 
-// Function to reset the test database
-const resetTestDB = async () => {
-  try {
-    // Initialize a new Pool instance for the test database connection
-    const db = new Pool({
-      connectionString: process.env.DB_TEST_URL,
-    });
+// Run a specific reset SQL file
+const resetTestDB = async (sqlFile) => {
+  const sqlPath = path.join(__dirname, "sql", sqlFile);
+  const sql = fs.readFileSync(sqlPath, "utf8");
 
-    // Execute the reset SQL file
-    await db.query(resetSQL);
-
-    // Close the connection pool
-    await db.end();
-
-    console.log('Test DB reset successfully');
-  } catch (err) {
-    console.error('Could not reset TestDB:', err);
-    throw err; // Rethrow the error to handle it in the calling function
-  }
+  await db.query(sql);
 };
 
-module.exports = { resetTestDB };
+module.exports = {
+  db,
+  resetTestDB,
+};
