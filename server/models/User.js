@@ -26,6 +26,14 @@ class User {
     return response.rows.length ? new User(response.rows[0]) : null;
   }
 
+  static async findByEmail(email) {
+    const response = await db.query('SELECT * FROM users WHERE email = $1;', [email])
+       if (response.rows.length !== 1) {
+            throw new Error("Unable to locate user.");
+    }
+    return new User(response.rows[0]);
+  }
+
   static async findById(id) {   // Find a user by ID (used for auth, progress, ownership checks)
     const response = await db.query('SELECT * FROM users WHERE id = $1', [id]);
     if (response.rows.length === 0) {
@@ -39,7 +47,7 @@ class User {
       `UPDATE users
       SET password = $1
       WHERE username = $2
-      RETURNING *;
+      RETURNING username, email;
       `,
       [password, username]
     );
@@ -51,14 +59,20 @@ class User {
     return new User(response.rows[0]);
   }
 
-  static async deleteByUsername(username) {     // Delete a user account
+  static async getPassword(email){
+      const response = await db.query(
+        'SELECT password from users WHERE email = $1;', [email])
+        return new User(response.rows[0])
+  }  
+
+  static async deleteByEmail(email) {     // Delete a user account
     const response = await db.query(
       `
       DELETE FROM users
-      WHERE username = $1
+      WHERE email = $1
       RETURNING *;
       `,
-      [username]
+      [email]
     );
 
     if (!response.rows.length) {
