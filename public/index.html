@@ -24,32 +24,11 @@
       <button type="submit">Log In</button>
     </form>
     <div class="switch">
-      New here? <a href="#" onclick="toggleAuth()">Create an account</a>
+      New here? <a href="/signup">Create an account</a>
     </div>
+
   </div>
 
-  <div id="signup-box" class="auth-box" style="display: none;">
-    <h1>Create Account</h1>
-    <form id="signup-form">
-      <label for="name">Full Name</label>
-      <input type="text" id="name" placeholder="Jane Doe" required />
-      
-      <label for="signup-email">Email</label>
-      <input type="email" id="signup-email" placeholder="you@example.com" required />
-      
-      <label for="signup-password">Password</label>
-      <input type="password" id="signup-password" placeholder="••••••••" required />
-      
-      <label for="confirm-password">Confirm Password</label>
-      <input type="password" id="confirm-password" placeholder="••••••••" required />
-      
-      <button type="submit">Sign Up</button>
-    </form>
-    <div class="switch">
-      Already have an account? <a href="#" onclick="toggleAuth()">Log in</a>
-    </div>
-  </div>
-
-  <script src="js/auth.js"></script>
+  <script src="js/client.js"></script>
 </body>
 </html>
