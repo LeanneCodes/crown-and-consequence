@@ -11,7 +11,7 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL
 );
 
 
@@ -52,6 +52,8 @@ CREATE TABLE scenes (
     is_final BOOLEAN DEFAULT FALSE
 );
 
+-- for authentication
+-- create table post
 
 -- PROGRESS
 CREATE TABLE progress (
@@ -66,7 +68,7 @@ CREATE TABLE progress (
 );
 
 -- USERS
-INSERT INTO users (username, email, password_hash)
+INSERT INTO users (username, email, password)
 VALUES
 ('student1', 'student1@example.com', 'hashed_password_1'),
 ('student2', 'student2@example.com', 'hashed_password_2');
