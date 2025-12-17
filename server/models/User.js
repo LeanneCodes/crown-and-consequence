@@ -59,11 +59,11 @@ class User {
     return new User(response.rows[0]);
   }
 
-  static async getPassword(email){
-      const response = await db.query(
-        'SELECT password from users WHERE email = $1;', [email])
-        return new User(response.rows[0])
-  }  
+  // static async getPassword(email){
+  //     const response = await db.query(
+  //       'SELECT password from users WHERE email = $1;', [email])
+  //       return new User(response.rows[0])
+  // }  
 
   static async deleteByEmail(email) {     // Delete a user account
     const response = await db.query(

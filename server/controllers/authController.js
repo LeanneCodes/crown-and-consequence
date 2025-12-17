@@ -1,8 +1,9 @@
+require('dotenv').config();
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
 const User = require('../models/User');
-const console = require('node:console');
+
 
 async function signup(req, res) {
     const data = req.body;
@@ -70,17 +71,21 @@ async function login(req, res) {
             res.status(401).json({error: err.message});
         }}
 
-        // async function changePassword(req, res){
-        //     const data = req.body;
-        //     console.log(data)
-        //     try{
-        //         const user = await User.findByEmail(user.email)
-        //         if (!newPassword) {
-        //      return res.status(400).json({ error: "New password is required" });
-        //     }  
-        // }catch (err){
-        //     res.status(401).json({error: err.message})
-        // }}
-    
+        async function changePassword(req, res){
+            const data = req.body;
+            const newPassword = data.password
+            try{
+                const user = await User.findByEmail(user.email)
+                const match = await bcrypt.compare(data.password, user.password);
+                if (!newPassword) {
+             return res.status(400).json({ error: "New password is required" });
+                }
+                if(match){
+             await User.updatePassword(password)
+                }
+        }catch (err){
+            res.status(401).json({error: err.message})
+        }}
+
 
     module.exports = {signup, login, deleteAccount, changePassword}
