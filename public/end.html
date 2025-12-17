@@ -5,14 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/cc-logo-simple.png">
   <link rel="stylesheet" href="css/style.css" />
+<<<<<<< HEAD
   <title>Results | Crown and Consequence</title>
+=======
+  <title>Game Complete | Crown and Consequence</title>
+>>>>>>> 2f2921bf14651529aa6f91c9b28d55061656692f
 </head>
 <body>
-   <div class="header-logo">
-        <img src="assets/cc-logo.png" alt="Crown and Consequence" style="max-width: 120px;">
-    </div>
-      <div class="selection-container">
+  <div class="header-logo">
+    <img src="assets/cc-logo.png" alt="Crown and Consequence" style="max-width: 120px;">
+  </div>
+
+  <div class="selection-container">
     <div class="auth-box selection-card wide">
+<<<<<<< HEAD
       
         <h1>Story End - Congratulations!</h1>
 
@@ -36,10 +42,40 @@
         <div class="switch">
             <a href="home.html">← Back to the Kingdom</a>
         </div>
+=======
+      <h1>Story Completed!</h1>
+      <p id="score-message"></p>
+      <div class="switch">
+        <a href="/home">← Back to the Kingdom</a>
+      </div>
+>>>>>>> 2f2921bf14651529aa6f91c9b28d55061656692f
     </div>
-</div>
+  </div>
 
+<<<<<<< HEAD
 <script src="js/end.js"></script>
   
+=======
+  <script>
+    // Get score from URL
+    const params = new URLSearchParams(window.location.search);
+    const score = Number(params.get("score")) || 0;
+    const maxScore = 20; // Total points possible
+    const passThreshold = 0.75; // 75%
+
+    const scoreMessageEl = document.getElementById("score-message");
+    const percentage = score / maxScore;
+
+    let message = `You scored ${score} out of ${maxScore}. `;
+
+    if (percentage >= passThreshold) {
+      message += "Well done! You passed this story.";
+    } else {
+      message += "Don't worry! Try again to improve your score.";
+    }
+
+    scoreMessageEl.textContent = message;
+  </script>
+>>>>>>> 2f2921bf14651529aa6f91c9b28d55061656692f
 </body>
 </html>
