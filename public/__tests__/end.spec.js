@@ -13,7 +13,7 @@ describe('end.html', () => {
   it('Heading matches', () => {
     const h1 = document.querySelector('h1')
     expect(h1).toBeTruthy
-    expect(h1.textContent).toBe("Story End - Congratulations you completed the game!")
+    expect(h1.textContent).toBe("Story Completed!")
   })
 
 //   it('h1 is empty when website loads', () => {

@@ -19,3 +19,5 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
     // Temporarily Redirecting to home.html on success
     window.location.href = 'home.html';
 });
+
+module.exports = { toggleAuth };
