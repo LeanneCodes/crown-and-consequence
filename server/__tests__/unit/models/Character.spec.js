@@ -8,10 +8,9 @@ describe("Character", () => {
   describe("getAll", () => {
     it("Retrieve all the characters", async () => {
       // Arrange
-      const mockStory = [
-        {id: 1, title:"t1", description: "td1", is_active: true},
-        {id: 2, title:"t2", description: "td2", is_active: true},
-        {id: 3, title:"t3", description: "td3", is_active: true}
+      const mockCharacter = [
+        {id: 1, storyId: 1, name: "C1", description: "C2"},
+        {id: 1, storyId: 1, name: "C1", description: "C2"},
       ]
 
       jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [mockStory] });
