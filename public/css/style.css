@@ -169,16 +169,22 @@ button:hover {
 }
 
 
-.story-wrapper {
-    margin-top: 120px; /* This pushes your main content down exactly enough */
-    padding: 20px;
+#story-wrapper {
+    margin-top: 20px; 
     display: flex;
     flex-direction: column;
     align-items: center;
+    
+    /* This creates the space between the boxes */
+    gap: 30px; 
+    
+    /* Ensures the container fills the width of the auth-box */
+    width: 100%;
 }
 
 .story-card {
-    flex: 1;
+    width: 100%;
+    max-width: 800px; 
     background-color: #fff;
     border: 1px solid #D1C2AA;
     border-radius: 8px;
@@ -590,12 +596,29 @@ border-radius: 6px;
 /* --- FIXING THE GAPS & SPACING --- */
 
 /* Container for all page content beneath the navbar */
+/* 1. Force the wrapper to be full width */
 .content-wrapper {
-    margin-top: 120px; /* This pushes your main content down exactly enough */
-    padding: 20px;
+    margin-top: 140px; /* Space for the navbar */
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    padding: 20px;
+}
+
+/* 2. Make the container allow for a wider card */
+.selection-container {
+    width: 100%;
+    max-width: 900px; /* Match your story page */
+    display: flex;
+    justify-content: center;
+}
+
+/* 3. The specific fix for the "Skinny" card */
+.auth-box.selection-card.wide {
+    max-width: 800px !important; /* Force it to grow beyond the 400px default */
+    width: 100%;
+    padding: 2.5rem;
 }
 
 /* Specific fix for the Scene Page (Image 1) */
@@ -652,3 +675,4 @@ border-radius: 6px;
 body {
     padding-top: 80px; 
 }
+

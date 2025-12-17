@@ -52,6 +52,8 @@ function handleAnswer(selectedOption) {
   if (!currentScene) return;
 
   if (selectedOption === currentScene.correct_option) {
+    // ADDED COLOR: Green for correct
+    feedbackEl.style.color = "#2e7d32"; 
     feedbackEl.textContent = currentScene.feedback_correct || "Correct!";
 
     // Only award points if first try
@@ -65,13 +67,15 @@ function handleAnswer(selectedOption) {
       currentSceneOrder++;
       setTimeout(() => loadScene(currentSceneOrder), 1000);
     } else {
-    // Final Scene completed
-    setTimeout(() => {
+      // Final Scene completed
+      setTimeout(() => {
         // We MUST include characterId here for the strict check!
         window.location.href = `/end.html?score=${score}&storyId=${storyId}&characterId=${characterId}`;
-    }, 500);
-}
+      }, 500);
+    }
   } else {
+    // ADDED COLOR: Red for wrong
+    feedbackEl.style.color = "#c62828"; 
     feedbackEl.textContent = currentScene.feedback_wrong || "Wrong! Try again.";
     firstTry = false; // mark that user has failed first attempt
   }

@@ -42,7 +42,10 @@ if (percentage >= passThreshold) {
     } else {
         message += "👑 Level completed! (Play your newest character to unlock more).";
     }
-}
+    } else {
+        // 3. WHAT HAPPENS IF THEY FAIL
+        message += "❌ You did not pass the requirement (75%). The next character remains locked. Try again!";
+    }
 
     scoreMessageEl.textContent = message;
 </script>
