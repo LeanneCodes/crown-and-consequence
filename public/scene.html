@@ -1,46 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game | Crown and Consequence</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8" />
+  <title>Game | Crown and Consequence</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  
-  <header class="game-header">
-    <h1>Explore the World</h1>
-    <div class="score" id="current-score">Score: 0</div>
-  </header>
-  
-  <main class="game-container">
-    
-        <section class="game-display" id="scene-display">
-        <div class="image-placeholder">
-            <img src="assets/battle-pic-1066.jpeg" alt="Image" id="scene-image" />
-        </div>
-      
-        <div class="narration-area" id="narration-area">
-            <p class="narration-text" id="narrative-text">
-                The air is thick with the scent of pine and fear. You stand at the edge of the battlefield...
-            </p>
-            <div class="action-buttons">
-                                <button class="next-btn" id="next-button">Next</button>
-            </div>
-        </div>
-    </section>
-    
-        <section class="question-area hidden" id="question-section">
-        <h2 id="question-text"></h2>
-    </section>
-    
-        <section class="options hidden" id="options-section">
-                <button class="option-btn" data-choice="A" id="option-a"></button>
-        <button class="option-btn" data-choice="B" id="option-b"></button>
-    </section>
-  </main>
 
-    <script src="js/scene.js"></script>
+  <!-- Header -->
+  <header class="game-header">
+    <h1 id="scene-title">Story</h1>
+    <div class="score">Score: <span id="score"></span></div>
+  </header>
 
+  <!-- Scene Image -->
+  <section class="game-display">
+    <img id="scene-image" src="https://via.placeholder.com/700x350" alt="Scene Image" />
+  </section>
+
+  <!-- Narrative -->
+  <section class="narrative">
+    <p id="scene-narrative">Scene narrative goes here...</p>
+  </section>
+
+  <!-- Question -->
+  <section class="question-area">
+    <h2 id="scene-question">What will you do?</h2>
+  </section>
+
+  <!-- Options -->
+  <section class="options">
+    <button id="option-a">Option A</button>
+    <button id="option-b">Option B</button>
+  </section>
+
+  <!-- Feedback -->
+  <p id="feedback" class="feedback-message"></p>
+
+  <script src="js/scene.js"></script>
 </body>
 </html>
