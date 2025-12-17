@@ -1,4 +1,6 @@
 const { renderDOM } = require('./helpers');
+const each = require('jest-each').default;
+const toggleAuth = require("../js/auth")
 // JUST A TEMPLATE OF TESTS FOR NOW, TO GIVE AN IDEA OF WHAT IS EXPECTED.
 let dom;
 let document;
@@ -14,6 +16,15 @@ describe('index.html', () => {
     const btn = document.querySelector('button')
     expect(btn).toBeTruthy
     expect(btn.innerHTML).toBe("Log In")
+  })
+})
+
+//Testing the auth.js
+describe("toggleAuth", () => {
+
+    it("Exists", () => {
+        expect(toggleAuth).toBeDefined();
+    })
   })
 
 //   it('h1 is empty when website loads', () => {
@@ -56,4 +67,3 @@ describe('index.html', () => {
 //     darkModeBtn.click()
 //     expect(body.className).toBe('')
 //   })
-})

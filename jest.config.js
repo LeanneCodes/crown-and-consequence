@@ -1,0 +1,19 @@
+// jest.config.js
+module.exports = {
+  projects: [
+    // jest.config.js
+    {
+      displayName: "backend",
+      testEnvironment: "node",
+      testMatch: ["<rootDir>/server/__tests__/**/*.spec.js"],
+      globalTeardown: "<rootDir>/server/__tests__/integration/teardown.js",
+    },
+    {
+      displayName: "frontend",
+      testEnvironment: "jsdom",
+      testMatch: ["<rootDir>/public/__tests__/**/*.spec.js"],
+      setupFilesAfterEnv: ["<rootDir>/public/__tests__/setup.js"],
+      testPathIgnorePatterns: ["<rootDir>/public/__tests__/helpers.js"],
+    },
+  ],
+};
