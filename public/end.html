@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/cc-logo-simple.png">
   <link rel="stylesheet" href="css/style.css" />
-  <title>Crown And Consequence</title>
+  <title>Results | Crown and Consequence</title>
 </head>
 <body>
    <div class="header-logo">
@@ -14,19 +14,24 @@
       <div class="selection-container">
     <div class="auth-box selection-card wide">
       
-        <h1>Story End - Congratulations you completed the game!</h1>
-</h1>
+        <h1>Story End - Congratulations!</h1>
 
-        <div class="settings-grid">
+       
+
             <section class="settings-section full-width">
-                <h2>Your Journey</h2>
-                <p><strong>Stories Completed:</strong> 10 / 10</p>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 100%;"></div>
-                </div>
+                <h2>Final Score</h2>
+                <p id="final-score-display">Calculating final results...</p>
+                <p style="font-size: 0.85rem; margin-top: 5px;">(Out of a possible 4 points)</p>
             </section>
 
-         
+          <div class="settings-grid">
+            <section class="settings-section full-width">
+                <h2>Your Journey</h2>
+                <p><strong>Stories Completed:</strong> 1 / 3</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 33%;"></div>
+                </div>
+            </section>
 
         <div class="switch">
             <a href="home.html">← Back to the Kingdom</a>
@@ -34,6 +39,7 @@
     </div>
 </div>
 
+<script src="js/end.js"></script>
   
 </body>
 </html>

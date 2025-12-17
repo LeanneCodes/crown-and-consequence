@@ -1,38 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="icon" type="image/png" href="assets/cc-logo-simple.png">
-    <title>Crown And Consequence</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" href="assets/cc-logo-simple.png">
+    <title>Choose Character | Crown And Consequence</title>
 </head>
 <body>
-    <div class="header-logo">
-            <img src="assets/cc-logo.png" alt="Crown and Consequence Logo">
-    </div>
-    </div>
-    <div class="selection-container">
-    <div class="auth-box selection-card wide">
-        <h1>Choose Your Character</h1>
-        <div class="options-grid grid-6">
-            <div class="option-item active" onclick="window.location.href='home.html'">
-                <div class="image-placeholder">HG</div>
-                <h3>Harold</h3>
-                <button>Select</button>
-            </div>
+    <div class="header-logo">
+            <img src="assets/cc-logo.png" alt="Crown and Consequence Logo">
+    </div>
+    <div class="selection-container">
+    <div class="auth-box selection-card wide">
+        <h1>Choose Your Character</h1>
+        
+                <div class="options-grid grid-6" id="character-grid">
+                    </div>
 
-            <div class="option-item locked"><div class="image-placeholder">🔒</div><h3>Locked</h3></div>
-            <div class="option-item locked"><div class="image-placeholder">🔒</div><h3>Locked</h3></div>
-            <div class="option-item locked"><div class="image-placeholder">🔒</div><h3>Locked</h3></div>
-            <div class="option-item locked"><div class="image-placeholder">🔒</div><h3>Locked</h3></div>
-            <div class="option-item locked"><div class="image-placeholder">🔒</div><h3>Locked</h3></div>
-        </div>
-        <div class="switch">
-            <a href="home.html">← Back to Stories</a>
-        </div>
-    </div>
+        <div class="switch">
+            <a href="home.html">← Back to Stories</a>
+        </div>
+    </div>
 </div>
-    
+    
+<script src="js/characters.js"></script>
+
 </body>
 </html>
