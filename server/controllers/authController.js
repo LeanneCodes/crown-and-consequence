@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -50,3 +51,5 @@ async function login(req, res) {
 
 
     module.exports = {signup, login}
+=======
+>>>>>>> 2f2921bf14651529aa6f91c9b28d55061656692f

@@ -15,24 +15,14 @@
     <div class="selection-container">
     <div class="auth-box selection-card wide">
         <h1>Choose Your Character</h1>
-        <div class="options-grid grid-6">
-            <div class="option-item active" onclick="window.location.href='home.html'">
-                <div class="image-placeholder">HG</div>
-                <h3>Harold</h3>
-                <button>Select</button>
-            </div>
-
-            <div class="option-item locked"><div class="image-placeholder">🔒</div><h3>Locked</h3></div>
-            <div class="option-item locked"><div class="image-placeholder">🔒</div><h3>Locked</h3></div>
-            <div class="option-item locked"><div class="image-placeholder">🔒</div><h3>Locked</h3></div>
-            <div class="option-item locked"><div class="image-placeholder">🔒</div><h3>Locked</h3></div>
-            <div class="option-item locked"><div class="image-placeholder">🔒</div><h3>Locked</h3></div>
+        <div class="options-grid grid-6" id="characters-wrapper">
+            <!-- characters injected here from database -->
         </div>
         <div class="switch">
-            <a href="home.html">← Back to Stories</a>
+            <a href="/home">← Back to Stories</a>
         </div>
     </div>
 </div>
-    
+    <script src="js/characters.js"></script>
 </body>
 </html>

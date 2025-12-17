@@ -40,6 +40,7 @@ CREATE TABLE scenes (
     id SERIAL PRIMARY KEY,
     character_id INT NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
     scene_order INT NOT NULL,
+    image TEXT,
     narrative TEXT NOT NULL,
     question TEXT NOT NULL,
     option_a VARCHAR(255) NOT NULL,
@@ -116,7 +117,6 @@ VALUES
   'Explore global tension, espionage, and ideological conflict in the post-war world.'
 );
 
-
 -- CHARACTERS (Battle of 1066)
 INSERT INTO characters (story_id, name, description, image)
 VALUES
@@ -124,61 +124,61 @@ VALUES
   1,
   'Harold Godwinson',
   'The last Anglo-Saxon King of England, killed at the Battle of Hastings.',
-  'https://upload.wikimedia.org/wikipedia/commons/3/3c/Harold_Godwinson_Bayeux_Tapestry.jpg'
+  'https://ichef.bbci.co.uk/images/ic/480xn/p03hdd2m.jpg'
 ),
 (
   1,
   'William of Normandy',
   'Duke of Normandy who claimed the English throne and became William the Conqueror.',
-  'https://upload.wikimedia.org/wikipedia/commons/5/5e/William_the_Conqueror_Bayeux_Tapestry.jpg'
+  'https://schoolshistory.org.uk/topics/wp-content/uploads/2018/05/william-the-conqueror.jpg'
 ),
 (
   1,
   'Edward the Confessor',
   'King of England whose death without an heir triggered the succession crisis.',
-  'https://upload.wikimedia.org/wikipedia/commons/9/9d/Edward_the_Confessor.jpg'
+  'https://upload.wikimedia.org/wikipedia/commons/6/61/Edward_the_Confessor%2C_the_Wilton_Diptych.jpg'
 ),
 (
   1,
   'Harald Hardrada',
   'King of Norway who invaded England and was defeated at the Battle of Stamford Bridge.',
-  'https://upload.wikimedia.org/wikipedia/commons/4/4a/Harald_Hardrada.jpg'
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS83WeTYedABB3Jouc038mlA228164M2svOFw&s'
 ),
 (
   1,
   'Tostig Godwinson',
   'Harold Godwinson’s exiled brother who allied with Harald Hardrada.',
-  'https://upload.wikimedia.org/wikipedia/commons/0/0c/Tostig_Godwinson.jpg'
+  'https://static.wikia.nocookie.net/kings-and-queens/images/4/4f/Img_9559.jpg/revision/latest?cb=20210128210525'
 ),
 (
   1,
   'Edgar Ætheling',
   'The last male heir of the House of Wessex, briefly proclaimed king but never crowned.',
-  'https://upload.wikimedia.org/wikipedia/commons/1/1a/Edgar_Aetheling.jpg'
+  'https://www.royal.uk/sites/default/files/styles/460x460/public/images/encyclopaedia/editrs198709_404385-lpr.jpg?itok=FIctGfBh'
 ),
 (
   1,
   'Bishop Odo of Bayeux',
   'Half-brother of William of Normandy who supported the invasion and appears in the Bayeux Tapestry.',
-  'https://upload.wikimedia.org/wikipedia/commons/7/77/Odo_of_Bayeux_Bayeux_Tapestry.jpg'
+  'https://cdn.britannica.com/86/126286-004-850C5ADB/William-I.jpg'
 ),
 (
   1,
   'Gyrth Godwinson',
   'Brother of Harold Godwinson who fought and died at the Battle of Hastings.',
-  'https://upload.wikimedia.org/wikipedia/commons/6/63/Gyrth_Godwinson_Bayeux_Tapestry.jpg'
+  'https://www.medievalchronicles.com/wp-content/uploads/2023/12/William_the_Conqueror_in_1066-300x300.webp'
 ),
 (
   1,
   'Leofwine Godwinson',
   'Another brother of Harold Godwinson who was killed fighting the Normans.',
-  'https://upload.wikimedia.org/wikipedia/commons/2/2b/Leofwine_Godwinson.jpg'
+  'https://preview.redd.it/if-harold-godwinson-won-at-hastings-would-he-have-started-v0-z6sf3twsjxte1.png?width=640&crop=smart&auto=webp&s=0d98c6532de860207d9800dc9402a8743b9651ab'
 ),
 (
   1,
   'Ealdred of York',
   'Archbishop who crowned Harold Godwinson and later Edgar Ætheling.',
-  'https://upload.wikimedia.org/wikipedia/commons/8/8a/Ealdred_of_York.jpg'
+  'https://europeanroyalhistory.wordpress.com/wp-content/uploads/2019/10/img_0438.jpg?w=584'
 );
 
 
@@ -186,6 +186,7 @@ VALUES
 INSERT INTO scenes (
     character_id,
     scene_order,
+    image,
     narrative,
     question,
     option_a,
@@ -200,52 +201,56 @@ VALUES
 (
     1,
     1,
+    'https://ichef.bbci.co.uk/images/ic/1200xn/p03hdd1h.jpg',
     'Edward the Confessor has died without a clear heir. As Earl of Wessex, Harold Godwinson claims that Edward promised him the throne.',
     'What should Harold do next?',
     'Accept the crown and become King of England',
     'Step aside and support another claimant',
     'A',
     'Correct. Harold was crowned King in January 1066.',
-    'Incorrect. Harold chose to claim the throne himself.',
+    'Incorrect. Harold chose to claim the throne himself. Try again.',
     0,
     FALSE
 ),
 (
     1,
     2,
+    'https://www.historic-uk.com/wp-content/uploads/2017/06/battle-of-stamford-bridge.jpg',
     'Harold learns that his brother Tostig has allied with the Norwegian king Harald Hardrada and invaded northern England.',
     'How should Harold respond to this threat?',
     'March north immediately to confront the invaders',
     'Remain in the south to defend against Normandy',
     'A',
     'Correct. Harold marched north and defeated the Norwegians at Stamford Bridge.',
-    'Incorrect. Ignoring the northern invasion would weaken his rule.',
+    'Incorrect. Ignoring the northern invasion would weaken his rule. Try again.',
     0,
     FALSE
 ),
 (
     1,
     3,
+    'https://www.usni.org/sites/default/files/Carlson-NH-SO-21%201.jpg',
     'Only days after victory in the north, Harold is told that William of Normandy has landed on the south coast.',
     'What decision must Harold now make?',
     'Rest his army before facing William',
     'Force march south to confront William immediately',
     'B',
     'Correct. Harold rushed south, leaving his army exhausted.',
-    'Incorrect. Harold did not delay his response.',
+    'Incorrect. Harold did not delay his response. Try again.',
     0,
     FALSE
 ),
 (
     1,
     4,
+    'https://cdn.historycollection.com/wp-content/uploads/2017/06/William-finds-Harold-dead-on-the-battlefield-English-Heritage.jpg',
     'Harold’s army meets William’s forces at the Battle of Hastings. The fighting is fierce and lasts all day.',
     'What is the outcome of the battle?',
     'Harold defeats William and secures his crown',
     'Harold is killed and William claims the throne',
     'B',
     'Correct. Harold was killed, and William became King of England.',
-    'Incorrect. Harold did not survive the battle.',
+    'Incorrect. Harold did not survive the battle. Try again.',
     0,
     TRUE
 );
