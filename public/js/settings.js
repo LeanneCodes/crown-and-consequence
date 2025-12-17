@@ -4,6 +4,7 @@ const confirmBtn = document.getElementById('confirm-delete-btn');
 const emailInput = document.getElementById('delete-email');
 const passwordInput = document.getElementById('delete-password');
 
+/* DELETE USER ACCOUNT */
 // show the form
 deleteBtn.addEventListener('click', () => {
   confirmDiv.style.display = 'block';
