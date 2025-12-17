@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const db = require("../db/connect");
 
 class User {
@@ -71,5 +70,3 @@ class User {
 }
 
 module.exports = User;
-=======
->>>>>>> 2f2921bf14651529aa6f91c9b28d55061656692f
