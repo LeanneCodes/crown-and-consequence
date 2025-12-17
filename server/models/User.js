@@ -26,6 +26,14 @@ class User {
     return response.rows.length ? new User(response.rows[0]) : null;
   }
 
+  static async findByEmail(email) {
+    const response = await db.query('SELECT * FROM users WHERE email = $1;', [email])
+       if (response.rows.length !== 1) {
+            throw new Error("Unable to locate user.");
+    }
+    return new User(response.rows[0]);
+  }
+
   static async findById(id) {   // Find a user by ID (used for auth, progress, ownership checks)
     const response = await db.query('SELECT * FROM users WHERE id = $1', [id]);
     if (response.rows.length === 0) {

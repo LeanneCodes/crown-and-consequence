@@ -23,12 +23,12 @@ async function signup(req, res) {
 async function login(req, res) {
     const data = req.body;
     try{
-        const user = await User.findByUsername(data.username);
+        const user = await User.findByEmail(data.email);
         if(!user) {throw new Error("This user doesn't exist")}
         const match = await bcrypt.compare(data.password, user.password);
 
         if(match) {
-            const load = {username: user.username}
+            const load = {email: user.email}
             const sendToken = (err, token) => {
                 if(err){
                     return res.status(500).json({error: "Token generating failed"})
