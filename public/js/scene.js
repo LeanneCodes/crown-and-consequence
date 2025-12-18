@@ -53,7 +53,8 @@ function handleAnswer(selectedOption) {
 
   if (selectedOption === currentScene.correct_option) {
     // ADDED COLOR: Green for correct
-    feedbackEl.style.color = "#2e7d32"; 
+    feedbackEl.style.color = "#2e7d32";
+    feedbackEl.style.marginTop = '1rem';
     feedbackEl.textContent = currentScene.feedback_correct || "Correct!";
 
     // Only award points if first try
@@ -65,11 +66,11 @@ function handleAnswer(selectedOption) {
     // Move to next scene after 1 second
     if (!currentScene.is_final) {
       currentSceneOrder++;
-      setTimeout(() => loadScene(currentSceneOrder), 4000);
+      setTimeout(() => loadScene(currentSceneOrder), 3000);
     } else {
       // Final Scene completed
       setTimeout(() => {
-        // We MUST include characterId here for the strict check!
+        // We must include characterId here for the strict check
         window.location.href = `/end.html?score=${score}&storyId=${storyId}&characterId=${characterId}`;
       }, 500);
     }
