@@ -65,7 +65,7 @@ function handleAnswer(selectedOption) {
     // Move to next scene after 1 second
     if (!currentScene.is_final) {
       currentSceneOrder++;
-      setTimeout(() => loadScene(currentSceneOrder), 1000);
+      setTimeout(() => loadScene(currentSceneOrder), 4000);
     } else {
       // Final Scene completed
       setTimeout(() => {
