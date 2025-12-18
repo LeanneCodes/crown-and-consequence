@@ -312,7 +312,7 @@ button:hover {
   font-size: 1.4rem;
 }
 .score {
-  font-size: 1rem;
+  font-size: 1.4rem;
   font-weight: bold;
   white-space: nowrap;
 }
@@ -644,7 +644,7 @@ border-radius: 6px;
 
 /* 1. Space between Scoreboard and Image */
 .game-header {
-    margin-bottom: 40px; /* Adds gap below the dark red header */
+    margin-bottom: 0px; /* Adds gap below the dark red header */
 }
 
 .game-display {
