@@ -37,13 +37,16 @@ describe("Scene", () => {
       expect(result.narrative).toBe("Test narrative");
 
       expect(db.query).toHaveBeenCalledWith(
-        `
-      SELECT *
-      FROM scenes
-      WHERE character_id = $1
-        AND scene_order = $2
-      LIMIT 1
-      `,
+    `
+    SELECT * FROM scenes 
+    WHERE scene_order = $2 
+    AND character_id = (
+        SELECT id FROM characters 
+        WHERE story_id = (SELECT story_id FROM characters WHERE id = $1)
+        ORDER BY id ASC LIMIT 1
+    )
+    LIMIT 1
+    `,
         [2, 1]
       );
     });
@@ -105,7 +108,7 @@ describe("Scene", () => {
       jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
 
       // Act
-      const result = await Scene.getById(999);
+      const result = await Scene.getById(-1);
 
       // Assert
       expect(result).toBeNull();

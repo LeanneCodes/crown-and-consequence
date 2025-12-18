@@ -129,8 +129,8 @@ describe("User", () => {
       // Arrange
       const testUser = {
         id: 3,
-        username: "alex",
-        email: "alex@test.com",
+        username: "test",
+        email: "test@test.com",
         password: "hashed_pw",
       };
 
@@ -154,9 +154,7 @@ describe("User", () => {
       jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
 
       // Act & Assert
-      await expect(User.findById(999)).rejects.toThrow(
-        "Unable to locate user."
-      );
+      await expect(User.findById(-1)).rejects.toThrow("Unable to locate user.");
     });
   });
 
