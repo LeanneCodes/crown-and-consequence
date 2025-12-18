@@ -1,4 +1,0 @@
-//Need to rename this file, and set up the route testing I believe, but will do that at the end when running the tests as a whole
-describe.skip("Goat endpoints integration", () => {
-  it.todo("add integration tests for goat endpoints");
-});

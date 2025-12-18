@@ -15,7 +15,7 @@ describe("Character", () => {
           name: "Hero",
           description: "Main character",
           is_active: true,
-          image: null,
+          image: null
         },
         {
           id: 2,
@@ -23,7 +23,7 @@ describe("Character", () => {
           name: "Villain",
           description: "Antagonist",
           is_active: false,
-          image: null,
+          image: null
         },
       ];
 

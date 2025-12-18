@@ -15,7 +15,7 @@ describe("Progress", () => {
         character_id: 3,
         current_scene_id: 4,
         score: 10,
-        completed: false,
+        completed: false
       };
 
       jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [testProgress] });
@@ -59,7 +59,7 @@ describe("Progress", () => {
         character_id: 4,
         current_scene_id: 5,
         score: 20,
-        completed: false,
+        completed: false
       };
 
       jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [testProgress] });
@@ -101,14 +101,14 @@ describe("Progress", () => {
         user_id: 1,
         story_id: 2,
         character_id: 3,
-        current_scene_id: 1,
+        current_scene_id: 1
       };
 
       const createdProgress = {
         id: 3,
         ...progressData,
         score: 0,
-        completed: false,
+        completed: false
       };
 
       jest
@@ -132,7 +132,7 @@ describe("Progress", () => {
           progressData.user_id,
           progressData.story_id,
           progressData.character_id,
-          progressData.current_scene_id,
+          progressData.current_scene_id
         ]
       );
     });
@@ -148,7 +148,7 @@ describe("Progress", () => {
         character_id: 3,
         current_scene_id: 2,
         score: 30,
-        completed: true,
+        completed: true
       };
 
       jest
@@ -161,7 +161,7 @@ describe("Progress", () => {
         story_id: 2,
         current_scene_id: 2,
         score: 30,
-        completed: true,
+        completed: true
       });
 
       // Assert

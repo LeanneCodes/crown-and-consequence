@@ -11,7 +11,7 @@ describe("User", () => {
       const userData = {
         username: "max",
         email: "max@test.com",
-        password: "hashed_pw",
+        password: "hashed_pw"
       };
 
       jest
@@ -23,7 +23,7 @@ describe("User", () => {
               id: 1,
               username: "max",
               email: "max@test.com",
-              password: "hashed_pw",
+              password: "hashed_pw"
             },
           ],
         }); // findById
@@ -58,7 +58,7 @@ describe("User", () => {
         id: 1,
         username: "max",
         email: "max@test.com",
-        password: "hashed_pw",
+        password: "hashed_pw"
       };
 
       jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [testUser] });
@@ -95,7 +95,7 @@ describe("User", () => {
         id: 2,
         username: "sophie",
         email: "sophie@test.com",
-        password: "hashed_pw",
+        password: "hashed_pw"
       };
 
       jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [testUser] });
@@ -131,7 +131,7 @@ describe("User", () => {
         id: 3,
         username: "test",
         email: "test@test.com",
-        password: "hashed_pw",
+        password: "hashed_pw"
       };
 
       jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [testUser] });
@@ -164,7 +164,7 @@ describe("User", () => {
       const updatedUser = {
         username: "max",
         email: "max@test.com",
-        password: "new_hash",
+        password: "new_hash"
       };
 
       jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [updatedUser] });

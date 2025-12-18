@@ -21,7 +21,7 @@ describe("Scene", () => {
         feedback_correct: "Correct",
         feedback_wrong: "Wrong",
         points: 10,
-        is_final: false,
+        is_final: false
       };
 
       jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [mockScene] });
@@ -76,7 +76,7 @@ describe("Scene", () => {
         feedback_correct: "Correct again",
         feedback_wrong: "Wrong again",
         points: 15,
-        is_final: true,
+        is_final: true
       };
 
       jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [mockScene] });
