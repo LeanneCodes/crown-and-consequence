@@ -8,39 +8,46 @@
   <title>Game Complete | Crown and Consequence</title>
 </head>
 <body>
-  <div class="header-logo">
-    <img src="assets/cc-logo.png" alt="Crown and Consequence" style="max-width: 120px;">
-  </div>
-
   <div class="selection-container">
     <div class="auth-box selection-card wide">
       <h1>Story Completed!</h1>
-      <p id="score-message"></p>
+      <p id="score-message" style="font-size: 1.2rem; margin: 20px 0;"></p>
+      
       <div class="switch">
-        <a href="/home">← Back to the Kingdom</a>
+        <a href="home.html" id="back-link">← Back to the Kingdom</a>
       </div>
     </div>
   </div>
 
-  <script>
-    // Get score from URL
+<script>
     const params = new URLSearchParams(window.location.search);
     const score = Number(params.get("score")) || 0;
-    const maxScore = 20; // Total points possible
-    const passThreshold = 0.75; // 75%
-
+    const storyId = params.get("storyId"); 
+    const currentProgress = Number(sessionStorage.getItem(`story_${storyId}_progress`)) || 0;
+    const lastUnlockedId = sessionStorage.getItem(`last_unlocked_id_${storyId}`);
+    const playedCharacterId = params.get("characterId");
+    const maxScore = 20; 
+    const passThreshold = 0.75; 
     const scoreMessageEl = document.getElementById("score-message");
-    const percentage = score / maxScore;
 
+    const percentage = score / maxScore;
     let message = `You scored ${score} out of ${maxScore}. `;
 
-    if (percentage >= passThreshold) {
-      message += "Well done! You passed this story.";
+    // Inside end.html <script>
+if (percentage >= passThreshold) {
+    // Only increment progress if the user just played the LATEST character they unlocked
+    if (playedCharacterId === lastUnlockedId) {
+        sessionStorage.setItem(`story_${storyId}_progress`, currentProgress + 1);
+        message += "👑 Next character unlocked!";
     } else {
-      message += "Don't worry! Try again to improve your score.";
+        message += "👑 Level completed! (Play your newest character to unlock more).";
+    }
+    } else {
+        // 3. WHAT HAPPENS IF THEY FAIL
+        message += "❌ You did not pass the requirement (75%). The next character remains locked. Try again!";
     }
 
     scoreMessageEl.textContent = message;
-  </script>
+</script>
 </body>
 </html>
