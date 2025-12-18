@@ -70,8 +70,8 @@ CREATE TABLE progress (
 -- USERS
 INSERT INTO users (username, email, password)
 VALUES
-('student1', 'student1@example.com', 'hashed_password_1'),
-('student2', 'student2@example.com', 'hashed_password_2');
+('student1', 'student1@example.com', 'Q7mA9K2fX4T8LJ6RZ5P'),
+('student2', 'student2@example.com', 'M8QZ7A5x4R9L2JTKF6P');
 
 -- STORIES
 INSERT INTO stories (title, description)
@@ -148,7 +148,7 @@ VALUES
   1,
   'Tostig Godwinson',
   'Harold Godwinson’s exiled brother who allied with Harald Hardrada.',
-  'https://static.wikia.nocookie.net/kings-and-queens/images/4/4f/Img_9559.jpg/revision/latest?cb=20210128210525'
+  'https://murreyandblue.wordpress.com/wp-content/uploads/2019/01/200px-george_plantagenet_duke_of_clarence.jpg?w=750'
 ),
 (
   1,
@@ -251,6 +251,79 @@ VALUES
     'B',
     'Correct. Harold was killed, and William became King of England.',
     'Incorrect. Harold did not survive the battle. Try again.',
+    0,
+    TRUE
+);
+
+-- SCENES (William of Normandy – Battle of 1066)
+INSERT INTO scenes (
+    character_id,
+    scene_order,
+    image,
+    narrative,
+    question,
+    option_a,
+    option_b,
+    correct_option,
+    feedback_correct,
+    feedback_wrong,
+    points,
+    is_final
+)
+VALUES
+(
+    2,
+    1,
+    'https://historicalbritainblog.com/wp-content/uploads/2014/11/William_Pays_Court_to_the_English_Leaders-by-James-William-Edmund-Doyle.jpg',
+    'Edward the Confessor, King of England, has died. William of Normandy claims that Edward promised him the English throne years earlier.',
+    'What should William do to support his claim?',
+    'Prepare to invade England and enforce his claim',
+    'Accept Harold Godwinson’s coronation peacefully',
+    'A',
+    'Correct. William began preparing an invasion to press his claim.',
+    'Incorrect. William did not accept Harold’s claim to the throne. Try again.',
+    0,
+    FALSE
+),
+(
+    2,
+    2,
+    'https://www.historic-uk.com/wp-content/uploads/2025/02/windsor-castle-2-1024x527.jpg',
+    'William gathers an army and builds a fleet of ships to cross the English Channel. He waits for favourable winds.',
+    'What is William’s best course of action?',
+    'Delay until conditions allow a safe crossing',
+    'Sail immediately despite poor weather',
+    'A',
+    'Correct. William waited patiently for favourable winds before sailing.',
+    'Incorrect. A rushed crossing could have destroyed his fleet. Try again.',
+    0,
+    FALSE
+),
+(
+    2,
+    3,
+    'https://i0.wp.com/heritagecalling.com/wp-content/uploads/2025/04/IC008_014.jpg?resize=1440%2C580&ssl=1',
+    'William successfully lands his army at Pevensey in southern England while Harold is fighting in the north.',
+    'How should William secure his position?',
+    'Build fortifications and wait for Harold’s army',
+    'March immediately inland without preparation',
+    'A',
+    'Correct. William built defences and prepared his forces for battle.',
+    'Incorrect. Securing the landing area was vital. Try again.',
+    0,
+    FALSE
+),
+(
+    2,
+    4,
+    'https://deadliestblogpage.wordpress.com/wp-content/uploads/2017/04/1408402.jpg?w=584',
+    'William faces Harold Godwinson at the Battle of Hastings. After hours of fighting, the Norman cavalry breaks the English lines.',
+    'What is the outcome of the battle?',
+    'William is defeated and forced to retreat to Normandy',
+    'William wins the battle and becomes King of England',
+    'B',
+    'Correct. William defeated Harold and was crowned King of England.',
+    'Incorrect. William emerged victorious at Hastings. Try again.',
     0,
     TRUE
 );
