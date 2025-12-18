@@ -7,9 +7,34 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-    <div class="header-logo">
-        <img src="assets/cc-logo.png" alt="Crown and Consequence" style="max-width: 120px;">
-    </div>
+   <nav class="cc-navbar">
+  <div class="switch">
+    <a href="home.html" class="nav-link back-link">
+      ← To the Kingdom
+    </a>
+  </div>
+  
+  <div class="nav-center">
+    <a href="home.html" class="logo-link">
+    <img src="/assets/cc-logo-2.png" alt="Crown and Consequence" class="nav-logo">
+    </a>
+  </div>
+  
+  <div class="nav-right">
+    <a href="settings.html" class="nav-link profile-link">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-text">Profile</span>
+    </a>
+    <div class="nav-right">
+     <a href="index.html">
+    <button class="nav-link logout-btn" id="logout-btn">
+        Logout
+    </button>
+    </a>
+  </div>
+  </div>
+</nav>
+ <div class="content-wrapper">
   <div class="selection-container">
     <div class="auth-box selection-card wide">
       
@@ -18,7 +43,7 @@
         <div class="settings-grid">
             <section class="settings-section full-width">
                 <h2>Your Journey</h2>
-                <p><strong>Stories Completed:</strong> 1 / 10</p>
+                <p><strong>Scenes Completed:</strong> 1 / 100</p>
                 <div class="progress-bar">
                     <div class="progress-fill" style="width: 10%;"></div>
                 </div>
@@ -56,7 +81,6 @@
     <script src="js/settings.js"></script>
 </body>
 </html>
-
 
 
 
