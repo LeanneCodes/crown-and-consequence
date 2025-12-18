@@ -12,6 +12,8 @@ Crown and Consequence allows students to engage with history in an interactive w
 
 The application is built as a minimum viable product (MVP), with a single playable story and character, while being designed to scale to multiple stories, characters, and branching narratives in the future.
 
+![Scene Image](./public/assets/cc-scene.png)
+
 ---
 
 ## Tech Stack
@@ -22,8 +24,10 @@ The application is built as a minimum viable product (MVP), with a single playab
 - JavaScript
 - HTML
 - CSS
+- Jest
 
 ### Planning & Design Tools
+
 - DrawSQL (database schema design)
 - Miro (wireframing and decision tree planning)
 
@@ -67,6 +71,24 @@ Nested routing is used to reflect the domain relationships between stories, char
 - Decision-based questions with feedback
 - Scoring system based on correct answers
 - Persistent progress tracking
+
+Sign up
+![Sign up](./public/assets/cc-signup.png)
+
+Login
+![Login](./public/assets/cc-login.png)
+
+Story Selection
+![story selection](./public/assets/cc-story.png)
+
+Character Selection
+![character selection](./public/assets/cc-characters.png)
+
+New Character Unlocked (After completing a scene)
+![new character](./public/assets/cc-character-unlocked.png)
+
+Settings Page
+![settings](./public/assets/cc-settings.png)
 
 ---
 
@@ -126,7 +148,7 @@ To run the project locally:
 ---
 
 ## Known Limitations
-- Only one story and character are fully playable in the MVP
+- Only one story and 2 characters are fully playable in the MVP
 - Scene progression is linear and does not yet branch
 - No password reset or account recovery functionality
 - Frontend is functional but minimal
