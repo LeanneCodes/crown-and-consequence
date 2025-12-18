@@ -5,8 +5,7 @@ module.exports = {
     {
       displayName: "backend",
       testEnvironment: "node",
-      testMatch: ["<rootDir>/server/__tests__/**/*.spec.js"],
-      globalTeardown: "<rootDir>/server/__tests__/integration/teardown.js",
+      testMatch: ["<rootDir>/server/__tests__/**/*.spec.js"]
     },
     {
       displayName: "frontend",
