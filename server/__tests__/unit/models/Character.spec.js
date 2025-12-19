@@ -1,43 +1,63 @@
 const Character = require("../../../models/Character");
 const db = require("../../../db/connect");
 
+
 describe("Character", () => {
   beforeEach(() => jest.clearAllMocks());
   afterAll(() => jest.resetAllMocks());
-
-  describe("getAll", () => {
-    it("Retrieve all the characters", async () => {
+//getAll is never used
+  describe("getByStoryId", () => {
+    it("resolves with characters on successful db query", async () => {
       // Arrange
-      const mockCharacter = [
-        {id: 1, storyId: 1, name: "C1", description: "C2"},
-        {id: 1, storyId: 1, name: "C1", description: "C2"},
-      ]
+      const testCharacters = [
+        {
+          id: 1,
+          story_id: 2,
+          name: "Hero",
+          description: "Main character",
+          is_active: true,
+          image: null
+        },
+        {
+          id: 2,
+          story_id: 2,
+          name: "Villain",
+          description: "Antagonist",
+          is_active: false,
+          image: null
+        },
+      ];
 
-      jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [mockStory] });
+      jest.spyOn(db, "query").mockResolvedValueOnce({ rows: testCharacters });
 
       // Act
-      const result = await Story.getAll();
+      const result = await Character.getByStoryId(2);
 
       // Assert
-      expect(result).toHaveLength(3);
-      expect(result[0]).toHaveProperty('id');
-      expect(result[0].title).toBe('t1');
+      expect(result).toHaveLength(2);
+      expect(result[0]).toBeInstanceOf(Character);
+      expect(result[0].name).toBe("Hero");
+      expect(result[0].storyId).toBe(2);
+
       expect(db.query).toHaveBeenCalledWith(
         `
-      SELECT id, title, description, is_active FROM stories
-      `
+      SELECT id, story_id, name, description, is_active, image
+      FROM characters
+      WHERE story_id = $1;
+      `,
+        [2]
       );
     });
 
-    it("returns [] when no story is found", async () => {
+    it("returns an empty array when no characters are found", async () => {
       // Arrange
       jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
 
       // Act
-      const result = await Story.getAll();
+      const result = await Character.getByStoryId(-1);
 
       // Assert
-      expect(result).toBe([]);
+      expect(result).toEqual([]);
     });
-  })
-})
+  });
+});

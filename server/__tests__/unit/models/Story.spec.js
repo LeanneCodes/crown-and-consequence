@@ -9,10 +9,10 @@ describe("Story", () => {
     it("Retrieve all the stories", async () => {
       // Arrange
       const mockStory = [
-        {id: 1, title:"t1", description: "td1", is_active: true},
-        {id: 2, title:"t2", description: "td2", is_active: true},
-        {id: 3, title:"t3", description: "td3", is_active: true}
-      ]
+        { id: 1, title: "t1", description: "td1", is_active: true },
+        { id: 2, title: "t2", description: "td2", is_active: true },
+        { id: 3, title: "t3", description: "td3", is_active: true },
+      ];
 
       jest.spyOn(db, "query").mockResolvedValueOnce({ rows: mockStory });
 
@@ -21,9 +21,11 @@ describe("Story", () => {
 
       // Assert
       expect(result).toHaveLength(3);
-      expect(result[0]).toHaveProperty('id');
-      expect(result[0].title).toBe('t1');
-      expect(db.query).toHaveBeenCalledWith('SELECT id, title, description, is_active FROM stories;');
+      expect(result[0]).toHaveProperty("id");
+      expect(result[0].title).toBe("t1");
+      expect(db.query).toHaveBeenCalledWith(
+        "SELECT id, title, description, is_active FROM stories;"
+      );
     });
 
     it("returns [] when no story is found", async () => {
@@ -36,5 +38,5 @@ describe("Story", () => {
       // Assert
       expect(result).toEqual([]);
     });
-  })
-})
+  });
+});

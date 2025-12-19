@@ -21,7 +21,7 @@ describe("Scene", () => {
         feedback_correct: "Correct",
         feedback_wrong: "Wrong",
         points: 10,
-        is_final: false,
+        is_final: false
       };
 
       jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [mockScene] });
@@ -37,13 +37,13 @@ describe("Scene", () => {
       expect(result.narrative).toBe("Test narrative");
 
       expect(db.query).toHaveBeenCalledWith(
-        `
-      SELECT *
-      FROM scenes
-      WHERE character_id = $1
-        AND scene_order = $2
-      LIMIT 1
-      `,
+    `
+    SELECT *
+    FROM scenes
+    WHERE character_id = $1
+    AND scene_order = $2
+    LIMIT 1
+    `,
         [2, 1]
       );
     });
@@ -76,7 +76,7 @@ describe("Scene", () => {
         feedback_correct: "Correct again",
         feedback_wrong: "Wrong again",
         points: 15,
-        is_final: true,
+        is_final: true
       };
 
       jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [mockScene] });
@@ -105,7 +105,7 @@ describe("Scene", () => {
       jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
 
       // Act
-      const result = await Scene.getById(999);
+      const result = await Scene.getById(-1);
 
       // Assert
       expect(result).toBeNull();

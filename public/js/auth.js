@@ -13,11 +13,15 @@ function toggleAuth() {
     }
 }
 
-document.getElementById('login-form').addEventListener('submit', (e) => {
+const loginForm = document.getElementById('login-form');
+
+if (loginForm) {
+  loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
     console.log("Login logic will be handled here.");
-    // Temporarily Redirecting to home.html on success
-    window.location.href = 'home.html';
-});
+    // Temporarily redirect to home.html on success
+  });
+}
+
 
 module.exports = { toggleAuth };
