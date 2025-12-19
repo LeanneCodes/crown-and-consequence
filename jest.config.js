@@ -1,7 +1,5 @@
-// jest.config.js
 module.exports = {
   projects: [
-    // jest.config.js
     {
       displayName: "backend",
       testEnvironment: "node",
