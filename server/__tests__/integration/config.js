@@ -11,6 +11,7 @@ const resetTestDB = async () => {
     const db = new Pool({
       connectionString: process.env.DB_TEST_URL,
     });
+    console.log(process.env.DB_TEST_URL)
 
     await db.query(resetSQL);
 

@@ -1,37 +1,42 @@
+jest.mock(require.resolve("../../../db/connect"), () => ({
+  query: jest.fn(),
+}));
+test("confirm mock is active", () => {
+  expect(db.query).toBeDefined();
+  expect(jest.isMockFunction(db.query)).toBe(true);
+});
+
 const User = require("../../../models/User");
 const db = require("../../../db/connect");
 
-describe("User", () => {
-  beforeEach(() => jest.clearAllMocks());
-  afterAll(() => jest.resetAllMocks());
+describe("User Model", () => {
 
-  describe("create", () => {
-    it("resolves with user on successful creation", async () => {
-      // Arrange
+  beforeEach(() => {
+    jest.clearAllMocks(); // keeps database mock intact, apparently
+  });
+
+  // CREATE USER
+  describe("create()", () => {
+    it("resolves with a new User object when insert + lookup succeed", async () => {
       const userData = {
         username: "max",
         email: "max@test.com",
-        password: "hashed_pw"
+        password: "hashed_pw",
       };
 
-      jest
-        .spyOn(db, "query")
+      db.query
         .mockResolvedValueOnce({ rows: [{ id: 1 }] }) // INSERT
         .mockResolvedValueOnce({
-          rows: [
-            {
-              id: 1,
-              username: "max",
-              email: "max@test.com",
-              password: "hashed_pw"
-            },
-          ],
-        }); // findById
+          rows: [{
+            id: 1,
+            username: "max",
+            email: "max@test.com",
+            password: "hashed_pw",
+          }],
+        });
 
-      // Act
       const result = await User.create(userData);
 
-      // Assert
       expect(result).toBeInstanceOf(User);
       expect(result.id).toBe(1);
       expect(result.username).toBe("max");
@@ -51,22 +56,20 @@ describe("User", () => {
     });
   });
 
-  describe("findByUsername", () => {
-    it("resolves with user when username exists", async () => {
-      // Arrange
+  // FIND BY USERNAME
+  describe("findByUsername()", () => {
+    it("returns a User object when found", async () => {
       const testUser = {
         id: 1,
         username: "max",
         email: "max@test.com",
-        password: "hashed_pw"
+        password: "hashed_pw",
       };
 
-      jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [testUser] });
+      db.query.mockResolvedValueOnce({ rows: [testUser] });
 
-      // Act
       const result = await User.findByUsername("max");
 
-      // Assert
       expect(result).toBeInstanceOf(User);
       expect(result.username).toBe("max");
 
@@ -76,34 +79,29 @@ describe("User", () => {
       );
     });
 
-    it("returns null when username does not exist", async () => {
-      // Arrange
-      jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
+    it("returns null when not found", async () => {
+      db.query.mockResolvedValueOnce({ rows: [] });
 
-      // Act
       const result = await User.findByUsername("ghost");
 
-      // Assert
       expect(result).toBeNull();
     });
   });
 
-  describe("findByEmail", () => {
-    it("resolves with user when email exists", async () => {
-      // Arrange
+  // FIND BY EMAIL
+  describe("findByEmail()", () => {
+    it("returns User when email exists", async () => {
       const testUser = {
         id: 2,
         username: "sophie",
         email: "sophie@test.com",
-        password: "hashed_pw"
+        password: "hashed_pw",
       };
 
-      jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [testUser] });
+      db.query.mockResolvedValueOnce({ rows: [testUser] });
 
-      // Act
       const result = await User.findByEmail("sophie@test.com");
 
-      // Assert
       expect(result).toBeInstanceOf(User);
       expect(result.email).toBe("sophie@test.com");
 
@@ -113,33 +111,29 @@ describe("User", () => {
       );
     });
 
-    it("should throw an Error when email is not found", async () => {
-      // Arrange
-      jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
+    it("throws error when email not found", async () => {
+      db.query.mockResolvedValueOnce({ rows: [] });
 
-      // Act & Assert
-      await expect(User.findByEmail("missing@test.com")).rejects.toThrow(
-        "Unable to locate user."
-      );
+      await expect(User.findByEmail("missing@test.com"))
+        .rejects
+        .toThrow("Unable to locate user.");
     });
   });
 
-  describe("findById", () => {
-    it("resolves with user on successful db query", async () => {
-      // Arrange
+  // FIND BY ID
+  describe("findById()", () => {
+    it("returns User when record exists", async () => {
       const testUser = {
         id: 3,
         username: "test",
         email: "test@test.com",
-        password: "hashed_pw"
+        password: "hashed_pw",
       };
 
-      jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [testUser] });
+      db.query.mockResolvedValueOnce({ rows: [testUser] });
 
-      // Act
       const result = await User.findById(3);
 
-      // Assert
       expect(result).toBeInstanceOf(User);
       expect(result.id).toBe(3);
 
@@ -149,30 +143,28 @@ describe("User", () => {
       );
     });
 
-    it("should throw an Error when user is not found", async () => {
-      // Arrange
-      jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
+    it("throws error when not found", async () => {
+      db.query.mockResolvedValueOnce({ rows: [] });
 
-      // Act & Assert
-      await expect(User.findById(-1)).rejects.toThrow("Unable to locate user.");
+      await expect(User.findById(-1))
+        .rejects
+        .toThrow("Unable to locate user.");
     });
   });
 
-  describe("updatePassword", () => {
-    it("resolves with updated user on successful update", async () => {
-      // Arrange
+  // UPDATE PASSWORD
+  describe("updatePassword()", () => {
+    it("returns updated User when successful", async () => {
       const updatedUser = {
         username: "max",
         email: "max@test.com",
-        password: "new_hash"
+        password: "new_hash",
       };
 
-      jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [updatedUser] });
+      db.query.mockResolvedValueOnce({ rows: [updatedUser] });
 
-      // Act
       const result = await User.updatePassword("max", "new_hash");
 
-      // Assert
       expect(result).toBeInstanceOf(User);
       expect(result.username).toBe("max");
 
@@ -186,28 +178,24 @@ describe("User", () => {
       );
     });
 
-    it("should throw an Error when user is not found", async () => {
-      // Arrange
-      jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
+    it("throws when user not found", async () => {
+      db.query.mockResolvedValueOnce({ rows: [] });
 
-      // Act & Assert
-      await expect(User.updatePassword("ghost", "pw")).rejects.toThrow(
-        "User not found"
-      );
+      await expect(User.updatePassword("ghost", "pw"))
+        .rejects
+        .toThrow("User not found");
     });
   });
 
-  describe("deleteByEmail", () => {
-    it("resolves with confirmation message on successful deletion", async () => {
-      // Arrange
-      jest.spyOn(db, "query").mockResolvedValueOnce({
+  // DELETE
+  describe("deleteByEmail()", () => {
+    it("confirms deletion when successful", async () => {
+      db.query.mockResolvedValueOnce({
         rows: [{ id: 1, email: "max@test.com" }],
       });
 
-      // Act
       const result = await User.deleteByEmail("max@test.com");
 
-      // Assert
       expect(result).toBe("User successfully deleted");
 
       expect(db.query).toHaveBeenCalledWith(
@@ -220,14 +208,12 @@ describe("User", () => {
       );
     });
 
-    it("should throw an Error when user does not exist", async () => {
-      // Arrange
-      jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [] });
+    it("throws when user does not exist", async () => {
+      db.query.mockResolvedValueOnce({ rows: [] });
 
-      // Act & Assert
-      await expect(User.deleteByEmail("missing@test.com")).rejects.toThrow(
-        "User not found"
-      );
+      await expect(User.deleteByEmail("missing@test.com"))
+        .rejects
+        .toThrow("User not found");
     });
   });
 });

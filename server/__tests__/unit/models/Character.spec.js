@@ -1,6 +1,7 @@
 const Character = require("../../../models/Character");
 const db = require("../../../db/connect");
 
+
 describe("Character", () => {
   beforeEach(() => jest.clearAllMocks());
   afterAll(() => jest.resetAllMocks());

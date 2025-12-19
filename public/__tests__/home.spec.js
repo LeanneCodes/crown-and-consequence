@@ -1,5 +1,5 @@
 const { renderDOM } = require('./helpers');
-// JUST A TEMPLATE OF TESTS FOR NOW, TO GIVE AN IDEA OF WHAT IS EXPECTED.
+
 let dom;
 let document;
 
